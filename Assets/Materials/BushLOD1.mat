@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BushMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 9d24c03394e93714cac0d0dc8570011a,
+  m_Name: BushLOD1
+  m_Shader: {fileID: -6465566751694194690, guid: 67f32e08a1305a94b88f0089b8292729,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
