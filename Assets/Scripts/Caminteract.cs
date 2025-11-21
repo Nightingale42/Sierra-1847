@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class Caminteract : MonoBehaviour
 {
     public Text InteractionText;
 
     public bool CanInteract = true;
+
+    //look at
+
+    public CinemachineVirtualCamera PlayerVcam;
+    public CinemachineVirtualCamera TalkZoomVcam;
+
+    public PlayerMovement FpsConroller;
+
 
     private float InteractDistance = 5f;
 
@@ -57,10 +66,19 @@ public class Caminteract : MonoBehaviour
     }
     IEnumerator TalkToFriendCO()
     {
+        InteractionText.text = "";
+        FpsConroller.enabled = false;
+        TalkZoomVcam.enabled = true;
+        PlayerVcam.enabled = false;
 
-        
+        yield return new WaitForSeconds(5f);
 
-        yield return new WaitForSeconds(2f);
+        FpsConroller.enabled = true;
+        PlayerVcam.enabled = true;
+        TalkZoomVcam.enabled = false;
+
+        CanInteract= true;
+
 
     }
 }
