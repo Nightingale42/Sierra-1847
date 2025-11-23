@@ -11,6 +11,7 @@ public class Caminteract : MonoBehaviour
     public Text InteractionText;
 
     public bool CanInteract = true;
+    
 
     //look at
 
@@ -101,7 +102,7 @@ public class Caminteract : MonoBehaviour
         TalkPanel.SetActive(true);
 
         SubText.text = "Me: ";
-        holder = "Hellur sister period queen";
+        holder = "Hey man, can I help with anything?";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -112,7 +113,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
               SubText.text = "Friend: ";
-        holder = "HELLLLUURRRRRR";
+        holder = "Hey there. We could use some help collecting wood for the cabins. ";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -122,7 +123,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
               SubText.text = "Friend: ";
-        holder = "Do you want to go to the clurb";
+        holder = "Are you in?";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -209,6 +210,7 @@ public class Caminteract : MonoBehaviour
             ChoicePack.SetActive(false);
             SubText.text = "";
             //look at 
+             Cursor.visible = false;
 
         LookAtScript.IKActive = false;
         //look at
@@ -218,6 +220,7 @@ public class Caminteract : MonoBehaviour
         TalkZoomVcam.enabled = false;
 
         CanInteract= true;
+        Cursor.lockState = CursorLockMode.Locked;
 
         yield return null;
     }

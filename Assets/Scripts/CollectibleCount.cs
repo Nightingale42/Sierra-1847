@@ -24,7 +24,7 @@ public class CollectibleCount : MonoBehaviour
         ++count;
         UpdateCount();
 
-        if (count > 0)
+        if (count > 6)
         {
             Debug.Log("you winny");
             SceneManager.LoadScene("GameWin");
