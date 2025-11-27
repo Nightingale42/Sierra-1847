@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Impact Variant Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3618636761501997366, guid: 5807d1bcd5afb0f4485bcc1e2e53e79d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4523482962550774681, guid: 5807d1bcd5afb0f4485bcc1e2e53e79d,
         type: 3}
       propertyPath: looping
