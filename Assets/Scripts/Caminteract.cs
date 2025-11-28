@@ -10,13 +10,19 @@ public class Caminteract : MonoBehaviour
 
     public Text InteractionText;
 
+    
+    private float InteractDistance = 2f;
+
     public bool CanInteract = true;
+    
     
 
     //look at
 
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
+
+    public CinemachineVirtualCamera RedFriendZoomVcam;
 
     public PlayerMovement FpsController;
 
@@ -32,7 +38,6 @@ public class Caminteract : MonoBehaviour
     //talk
 
 
-    private float InteractDistance = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +51,7 @@ public class Caminteract : MonoBehaviour
 
         if(CanInteract == true)
         {
+            
             Ray ray1 = new Ray(transform.position, transform.forward);
             RaycastHit hit1;
             
@@ -61,11 +67,32 @@ public class Caminteract : MonoBehaviour
                         StartCoroutine(TalkToFriendCO());
                     }
                 }
+                //talk to him
+
+             else if (hit1.collider.CompareTag("RedFriend"))
+            {
+                InteractionText.text = "Talk to red Friend";
+                //talk to him
+                
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    CanInteract = false;
+                    StartCoroutine(TalkToRedFriendCO());
+
+                }
+
+                //talk to him
+
+            }
+
                 else 
                 {
                     InteractionText.text = "";
                 }
             }
+           
+
+            
             else 
             {
 
@@ -73,17 +100,61 @@ public class Caminteract : MonoBehaviour
 
             }
         }
-        else
-        {
-            InteractionText.text = "";
-        }
+    
     }
+
+    IEnumerator TalkToRedFriendCO()
+    {
+        InteractionText.text= "";
+        FpsController.enabled= false;
+        //wont be able to move
+        RedFriendZoomVcam.enabled = true;
+        PlayerVcam.enabled = false;
+        TalkZoomVcam.enabled = false;
+        
+        //look at
+
+        //look at
+        yield return new WaitForSeconds(1f);
+
+        TalkPanel.SetActive(true);
+
+           SubText.text = "Me: ";
+        holder = "How're you holding up kid?";
+        foreach(char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+
+        }
+
+        yield return MousePress();
+
+         SubText.text = "Kid: ";
+        holder = "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.";
+        foreach(char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+
+        }
+
+        yield return MousePress();
+        
+        StartCoroutine(FinalCO());
+
+
+
+    }
+
+
     IEnumerator TalkToFriendCO()
     {
         InteractionText.text = "";
         FpsController.enabled = false;
         TalkZoomVcam.enabled = true;
         PlayerVcam.enabled = false;
+        RedFriendZoomVcam.enabled = false;
 
         //look at
         LookAtScript.IKActive = true;
@@ -120,6 +191,8 @@ public class Caminteract : MonoBehaviour
             yield return new WaitForSeconds(time);
 
         }
+
+
         yield return MousePress();
 
               SubText.text = "Friend: ";
@@ -134,22 +207,8 @@ public class Caminteract : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         ChoicePack.SetActive(true);
-
-
-
-        yield return new WaitForSeconds(1900f);
-
-        //look at 
-
-        LookAtScript.IKActive = false;
-        //look at
-
-        FpsController.enabled = true;
-        PlayerVcam.enabled = true;
-        TalkZoomVcam.enabled = false;
-
-        CanInteract= true;
-
+        
+        
 
     }
     
@@ -169,24 +228,30 @@ public class Caminteract : MonoBehaviour
     IEnumerator Choice1CO()
     {
         ChoicePack.SetActive(false);
-
+     yield return MousePress();
          SubText.text = "Me: ";
         holder = "Yes";
         foreach(char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
+            
 
         }
+        
+        yield return new WaitForSeconds(3f);
+        
+        
 
    StartCoroutine(FinalCO());
+
     }
 
      IEnumerator Choice2CO()
     {
 
         ChoicePack.SetActive(false);
-
+ yield return MousePress();
             SubText.text = "Me: ";
         holder = "No";
         foreach(char c in holder)
@@ -195,6 +260,9 @@ public class Caminteract : MonoBehaviour
             yield return new WaitForSeconds(time);
 
         }
+
+        yield return new WaitForSeconds(3f);
+      
 
       StartCoroutine(FinalCO());
 
@@ -210,7 +278,13 @@ public class Caminteract : MonoBehaviour
             ChoicePack.SetActive(false);
             SubText.text = "";
             //look at 
-             Cursor.visible = false;
+
+
+             //Cursor.visible = false;
+
+
+
+
 
         LookAtScript.IKActive = false;
         //look at
@@ -218,22 +292,23 @@ public class Caminteract : MonoBehaviour
         FpsController.enabled = true;
         PlayerVcam.enabled = true;
         TalkZoomVcam.enabled = false;
+        RedFriendZoomVcam.enabled = false;
 
         CanInteract= true;
-        Cursor.lockState = CursorLockMode.Locked;
+
+        //Cursor.lockState = CursorLockMode.Locked;
 
         yield return null;
     }
 
 
-
-        IEnumerator MousePress()
-        {
-            while(!Input.GetMouseButtonDown(0))
-            {
-                yield return null;
-            }
-        }
+IEnumerator MousePress()
+{
+    Debug.Log("Waiting for mouse press...");
+    while(!Input.GetMouseButtonDown(0))
+        yield return null;
+    Debug.Log("Mouse pressed!");
+}
 
 
 
