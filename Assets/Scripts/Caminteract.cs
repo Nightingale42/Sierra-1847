@@ -6,6 +6,16 @@ using Cinemachine;
 
 public class Caminteract : MonoBehaviour
 {
+
+    //Lookat Check
+
+    public bool TalkToActualFriend = false;
+    //look at animation 
+
+    public bool TalkToRedFriend = false;
+    //look at animation 
+
+    //Lookat Check
     public LookAtFunction LookAtScript;
 
     public Text InteractionText;
@@ -105,6 +115,11 @@ public class Caminteract : MonoBehaviour
 
     IEnumerator TalkToRedFriendCO()
     {
+        //check bool 
+
+        TalkToRedFriend = true;
+
+        //check bool
         InteractionText.text= "";
         FpsController.enabled= false;
         //wont be able to move
@@ -113,6 +128,8 @@ public class Caminteract : MonoBehaviour
         TalkZoomVcam.enabled = false;
         
         //look at
+
+        LookAtScript.IKActive = true;
 
         //look at
         yield return new WaitForSeconds(1f);
@@ -150,6 +167,13 @@ public class Caminteract : MonoBehaviour
 
     IEnumerator TalkToFriendCO()
     {
+        //check bool
+
+        TalkToActualFriend = true;
+        
+
+        //check bool
+
         InteractionText.text = "";
         FpsController.enabled = false;
         TalkZoomVcam.enabled = true;
@@ -196,7 +220,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
               SubText.text = "Friend: ";
-        holder = "Are you in?";
+        holder = "The Axe is over by the wagon. Are you in?";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -233,7 +257,7 @@ public class Caminteract : MonoBehaviour
         ChoicePack.SetActive(false);
     
          SubText.text = "Me: ";
-        holder = "Yes";
+        holder = "Yeah I can help out with that.";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -261,7 +285,7 @@ public class Caminteract : MonoBehaviour
         ChoicePack.SetActive(false);
 
             SubText.text = "Me: ";
-        holder = "No";
+        holder = "No, sorry I'm busy at the moment.";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -283,6 +307,15 @@ public class Caminteract : MonoBehaviour
 
         IEnumerator FinalCO()
         {
+
+            //Check  bool
+
+            TalkToRedFriend = false;
+            TalkToActualFriend = false;
+
+            //reset everything for head turn animation
+
+            //Check bool
             TalkPanel.SetActive(false);
             FpsController.enabled = true;
             ChoicePack.SetActive(false);
@@ -290,7 +323,7 @@ public class Caminteract : MonoBehaviour
             //look at 
 
 
-             //Cursor.visible = false;
+             Cursor.visible = false;
 
 
 
@@ -306,7 +339,7 @@ public class Caminteract : MonoBehaviour
 
         CanInteract= true;
 
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
         yield return null;
     }

@@ -1347,6 +1347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abaf911a90bdfe74bb024a702ee39834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TalkToActualFriend: 0
+  TalkToRedFriend: 0
   LookAtScript: {fileID: 1959997950}
   InteractionText: {fileID: 104615005}
   CanInteract: 1
@@ -2169,10 +2171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528f97d62a59e6d4cb3a14de5ad47db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 604025893}
+  animator: {fileID: 1959997947}
+  RedFriendAnimator: {fileID: 604025893}
   IKActive: 0
   LookAtObj: {fileID: 1581759157}
   LookWeight: 2
+  CamInteraction: {fileID: 397406346}
 --- !u!65 &604025892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2204,7 +2208,7 @@ Animator:
   m_GameObject: {fileID: 604025890}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c0e0c84d458f6824981d274f5319f2a2, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7f5d3f2d4a1da2f4699b891770722151, type: 2}
+  m_Controller: {fileID: 9100000, guid: d50810167ed70954db7c9beafc9be60f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -10683,9 +10687,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1959997947}
+  RedFriendAnimator: {fileID: 604025893}
   IKActive: 0
   LookAtObj: {fileID: 1581759157}
   LookWeight: 2
+  CamInteraction: {fileID: 397406346}
 --- !u!1 &1996530069 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bca2568df7af3784495bb4f636cf79c6,
@@ -10888,6 +10894,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: RedFriend
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: c0e0c84d458f6824981d274f5319f2a2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.031336736
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465940246521907071, guid: c0e0c84d458f6824981d274f5319f2a2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.028302731
       objectReference: {fileID: 0}
     - target: {fileID: 7205140776170859923, guid: c0e0c84d458f6824981d274f5319f2a2,
         type: 3}
