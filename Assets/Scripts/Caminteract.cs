@@ -225,10 +225,13 @@ public class Caminteract : MonoBehaviour
     }
 
 
+
+
+
     IEnumerator Choice1CO()
     {
         ChoicePack.SetActive(false);
-     yield return MousePress();
+    
          SubText.text = "Me: ";
         holder = "Yes";
         foreach(char c in holder)
@@ -239,7 +242,7 @@ public class Caminteract : MonoBehaviour
 
         }
         
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         
         
 
@@ -247,11 +250,16 @@ public class Caminteract : MonoBehaviour
 
     }
 
+
+
+
+
+
      IEnumerator Choice2CO()
     {
 
         ChoicePack.SetActive(false);
- yield return MousePress();
+
             SubText.text = "Me: ";
         holder = "No";
         foreach(char c in holder)
@@ -261,12 +269,14 @@ public class Caminteract : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
       
 
       StartCoroutine(FinalCO());
 
         
+
+
 
 
         }
