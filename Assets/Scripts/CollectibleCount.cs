@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CollectibleCount : MonoBehaviour
 {
-    TMPro.TMP_Text text;
-    public int count;
+    TMP_Text text;
     public WinLose winLoseScript;
 
     void Awake()
@@ -14,29 +14,27 @@ public class CollectibleCount : MonoBehaviour
         text = GetComponent<TMPro.TMP_Text>();
     }
 
-    void Start() => UpdateCount();
+    void Start()
+    {
+        UpdateCount();
+    }
 
-    void OnEnable() => Collectible.OnCollected += OnCollectibleCollected;
-    void onDisable()=> Collectible.OnCollected -= OnCollectibleCollected;
+    void OnEnable()  => Collectible.OnCollected += OnCollectibleCollected;
+    void OnDisable() => Collectible.OnCollected -= OnCollectibleCollected;
 
     void OnCollectibleCollected()
     {
-        ++count;
+        Caminteract.count++;   // update the REAL count
         UpdateCount();
 
-        if (count > 6)
+        if (Caminteract.count > 6)
         {
-            Debug.Log("you winny");
             SceneManager.LoadScene("GameWin");
-
         }
-
-
     }
 
     void UpdateCount()
     {
-        text.text = $"{count} / {Collectible.total}";
+        text.text = $"{Caminteract.count} / {Collectible.total}";
     }
 }
-

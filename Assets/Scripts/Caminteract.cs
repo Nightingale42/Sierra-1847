@@ -24,6 +24,12 @@ public class Caminteract : MonoBehaviour
     private float InteractDistance = 2f;
 
     public bool CanInteract = true;
+
+    public static int count;
+
+    public GameObject collectibleCounterGameObject; 
+   
+    
     
     
 
@@ -31,6 +37,8 @@ public class Caminteract : MonoBehaviour
 
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
+
+    
 
     public CinemachineVirtualCamera RedFriendZoomVcam;
 
@@ -48,13 +56,7 @@ public class Caminteract : MonoBehaviour
     //talk
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+  
     // Update is called once per frame
     void Update()
     {
@@ -196,6 +198,28 @@ public class Caminteract : MonoBehaviour
 
         TalkPanel.SetActive(true);
 
+             
+Debug.Log("TalkToFriendCO started. Current count value: " + count);
+         if (count > 2)
+         {
+            SubText.text = "Friend: ";
+            holder = "Thanks for collecting those logs. Theres some soup in the communal pot. Don't ask whats in it. ";
+            foreach(char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+        
+            yield return new WaitForSeconds(2f);
+       
+            StartCoroutine(FinalCO());
+            
+            yield break; // This stops the coroutine here if count > 2
+         }
+
+
+         
+
         SubText.text = "Me: ";
         holder = "Hey man, can I help with anything?";
         foreach(char c in holder)
@@ -208,7 +232,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
               SubText.text = "Friend: ";
-        holder = "Hey there. We could use some help collecting wood for the cabins. ";
+        holder = "Hey there.  We could use some help collecting wood for the cabins. ";
         foreach(char c in holder)
         {
             SubText.text += c;
@@ -220,7 +244,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
               SubText.text = "Friend: ";
-        holder = "The Axe is over by the wagon. Are you in?";
+        holder = "The Axe is over by the barrels.  Are you in?";
         foreach(char c in holder)
         {
             SubText.text += c;
