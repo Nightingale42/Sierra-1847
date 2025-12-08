@@ -9,6 +9,7 @@ TagManager:
   - RedFriend
   - WoodAxe
   - BowlSoup
+  - Bed
   layers:
   - Default
   - TransparentFX

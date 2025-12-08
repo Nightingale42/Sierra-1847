@@ -6,21 +6,25 @@ public class Breakable : MonoBehaviour
 {
     [SerializeField] GameObject fullTree;
     [SerializeField] GameObject treeChopped;
-    // Define the required proximity radius
     [SerializeField] float interactionRadius = 3f;
 
     private BoxCollider boxCollider;
-    private GameObject woodAxe; // Reference to the WoodAxe object
+    private GameObject woodAxe; 
+    private AudioSource audioSource; // 🔊 Audio source for break sound
 
     private void Awake()
     {
-        // Set initial state and get the BoxCollider component
+        // Get the AudioSource attached to this object
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("No AudioSource found on this Breakable object!");
+        }
+
         fullTree.SetActive(true);
         treeChopped.SetActive(false);
         boxCollider = GetComponent<BoxCollider>();
 
-        // Find the GameObject tagged "WoodAxe" in the scene once
-        // (Ensure an object with this tag exists in your scene)
         woodAxe = GameObject.FindGameObjectWithTag("WoodAxe");
 
         if (woodAxe == null)
@@ -31,14 +35,12 @@ public class Breakable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Check if the WoodAxe object exists and if the player is within the interaction radius
         if (woodAxe != null)
         {
             float distance = Vector3.Distance(transform.position, woodAxe.transform.position);
 
             if (distance <= interactionRadius)
             {
-                // Call the Break method only if in proximity
                 Break();
             }
             else
@@ -50,14 +52,17 @@ public class Breakable : MonoBehaviour
 
     private void Break()
     {
-        // Disable the full tree, enable the chopped tree, and disable the collider
+        // 🔊 Play break sound
+        if (audioSource != null)
+            audioSource.Play();
+
         fullTree.SetActive(false);
         treeChopped.SetActive(true);
         boxCollider.enabled = false;
+
         Debug.Log("Tree broken!");
     }
 
-    // Optional: Draw the interaction radius in the editor for visualization
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
