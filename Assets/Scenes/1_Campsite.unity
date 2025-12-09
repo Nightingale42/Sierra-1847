@@ -1688,7 +1688,6 @@ MonoBehaviour:
   LookAtScript: {fileID: 1959997950}
   InteractionText: {fileID: 104615005}
   CanInteract: 1
-  collectibleCounterGameObject: {fileID: 2082585385}
   PlayerVcam: {fileID: 397406347}
   TalkZoomVcam: {fileID: 1474319218}
   RedFriendZoomVcam: {fileID: 562041480}
@@ -1893,7 +1892,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397406340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8ed1d7d1b43d964ca23dca6ebe3e8ce, type: 3}
   m_Name: 
@@ -1902,6 +1901,7 @@ MonoBehaviour:
   BlackPanel_GO: {fileID: 447921003}
   playerMovement: {fileID: 1108947545}
   Subtext: {fileID: 120010645}
+  InteractionText: {fileID: 104615005}
 --- !u!1001 &403529936
 PrefabInstance:
   m_ObjectHideFlags: 0

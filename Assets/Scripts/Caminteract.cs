@@ -6,380 +6,326 @@ using Cinemachine;
 
 public class Caminteract : MonoBehaviour
 {
-
-    //Lookat Check
-
+    // Interaction
     public bool TalkToActualFriend = false;
-    //look at animation 
-
     public bool TalkToRedFriend = false;
-    //look at animation 
-
-    //Lookat Check
     public LookAtFunction LookAtScript;
-
     public Text InteractionText;
-
-    
     private float InteractDistance = 2f;
-
     public bool CanInteract = true;
 
+    // Wood collecting
     public static int count;
 
-    public GameObject collectibleCounterGameObject; 
-   
-    
-    
-    
-
-    //look at
-
+    // Cameras & Movement
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
-
-    
-
     public CinemachineVirtualCamera RedFriendZoomVcam;
-
     public PlayerMovement FpsController;
 
-    //talk
-        public GameObject TalkPanel; 
+    // Dialogue UI
+    public GameObject TalkPanel;
+    public GameObject ChoicePack;
+    public Text SubText;
 
-        public GameObject ChoicePack;
+    string holder;
+    float time = 0.05f;
 
-        public Text SubText;
-        string holder;
-        float time = 0.05f;
+    // Sleep System
+    private SleepSystem sleepSystem;
+    private bool sleepEnabled = false;
 
-    //talk
+    // ------------------------------------------
+    void Start()
+    {
+        sleepSystem = GetComponent<SleepSystem>();  // Find SleepSystem on same GameObject
+    }
 
-
-  
-    // Update is called once per frame
+    // ------------------------------------------
+    // UPDATE – Interaction Raycast
+    // ------------------------------------------
     void Update()
     {
+        if (!CanInteract)
+            return;
 
-        if(CanInteract == true)
+        Ray ray1 = new Ray(transform.position, transform.forward);
+        RaycastHit hit1;
+
+        if (Physics.Raycast(ray1, out hit1, InteractDistance))
         {
-            
-            Ray ray1 = new Ray(transform.position, transform.forward);
-            RaycastHit hit1;
-            
-            if(Physics.Raycast(ray1, out hit1, InteractDistance))
+            if (hit1.collider.CompareTag("Friend"))
             {
-                if (hit1.collider.CompareTag("Friend"))
-                {
-                    InteractionText.text = "Talk To Him";
-                    //talk to him
-                    if(Input.GetKeyDown(KeyCode.E))
-                    {
-                        CanInteract = false;
-                        StartCoroutine(TalkToFriendCO());
-                    }
-                }
-                //talk to him
+                InteractionText.text = "Talk To Him";
 
-             else if (hit1.collider.CompareTag("RedFriend"))
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    CanInteract = false;
+                    StartCoroutine(TalkToFriendCO());
+                }
+            }
+            else if (hit1.collider.CompareTag("RedFriend"))
             {
-                InteractionText.text = "Talk to red Friend";
-                //talk to him
-                
+                InteractionText.text = "Talk to Red Friend";
+
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     CanInteract = false;
                     StartCoroutine(TalkToRedFriendCO());
-
-                }
-
-                //talk to him
-
-            }
-
-                else 
-                {
-                    InteractionText.text = "";
                 }
             }
-           
-
-            
-            else 
+            else
             {
-
                 InteractionText.text = "";
-
             }
         }
-    
+        else
+        {
+            InteractionText.text = "";
+        }
     }
 
+    // ------------------------------------------
+    // RED FRIEND DIALOGUE
+    // ------------------------------------------
     IEnumerator TalkToRedFriendCO()
     {
-        //check bool 
-
         TalkToRedFriend = true;
+        InteractionText.text = "";
+        FpsController.enabled = false;
 
-        //check bool
-        InteractionText.text= "";
-        FpsController.enabled= false;
-        //wont be able to move
         RedFriendZoomVcam.enabled = true;
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
-        
-        //look at
 
         LookAtScript.IKActive = true;
 
-        //look at
         yield return new WaitForSeconds(1f);
-
         TalkPanel.SetActive(true);
 
-           SubText.text = "Me: ";
+        // Dialogue 1
+        SubText.text = "Me: ";
         holder = "How're you holding up kid?";
-        foreach(char c in holder)
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
 
         yield return MousePress();
 
-         SubText.text = "Kid: ";
+        // Dialogue 2
+        SubText.text = "Kid: ";
         holder = "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.";
-        foreach(char c in holder)
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
 
         yield return MousePress();
-        
+
         StartCoroutine(FinalCO());
-
-
-
     }
 
-
+    // ------------------------------------------
+    // MAIN FRIEND DIALOGUE (with priority system)
+    // ------------------------------------------
     IEnumerator TalkToFriendCO()
     {
-        //check bool
-
         TalkToActualFriend = true;
-        
-
-        //check bool
-
         InteractionText.text = "";
         FpsController.enabled = false;
+
         TalkZoomVcam.enabled = true;
         PlayerVcam.enabled = false;
         RedFriendZoomVcam.enabled = false;
 
-        //look at
         LookAtScript.IKActive = true;
-        //look at
 
         yield return new WaitForSeconds(1f);
 
-        FpsController.enabled = false;
-
-
-        //cursor
-         Cursor.lockState = CursorLockMode.None;
-         Cursor.visible = true;
-        //cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         TalkPanel.SetActive(true);
 
-             
-Debug.Log("TalkToFriendCO started. Current count value: " + count);
-         if (count > 2)
-         {
+        Debug.Log("TalkToFriendCO started. count = " + count);
+        Debug.Log("TalkToFriendCO started. SliceEaten = " + EatingSystem.SliceEaten);
+
+        // ==================================================
+        // PRIORITY SYSTEM
+        // 1. Soup Dialogue (also activates SleepSystem)
+        // 2. Logs Dialogue
+        // 3. Default Dialogue
+        // ==================================================
+
+        // -----------------------------
+        // 1. SOUP PRIORITY
+        // -----------------------------
+        if (EatingSystem.SliceEaten > 2)
+        {
+            Debug.Log("PRIORITY: Soup dialogue triggered.");
+
+            // Enable SleepSystem ONCE
+            if (!sleepEnabled)
+            {
+                sleepEnabled = true;
+
+                if (sleepSystem != null)
+                {
+                    sleepSystem.enabled = true;
+                    Debug.Log("SleepSystem ENABLED because SliceEaten > 2");
+                }
+                else
+                {
+                    Debug.LogError("SleepSystem NOT FOUND on this GameObject!");
+                }
+            }
+
             SubText.text = "Friend: ";
-            holder = "Thanks for collecting those logs. Theres some soup in the communal pot. Don't ask whats in it. ";
-            foreach(char c in holder)
+            holder = "Looks like you got some dinner. Probably best to head to bed, we've got a big day ahead.";
+            foreach (char c in holder)
             {
                 SubText.text += c;
                 yield return new WaitForSeconds(time);
             }
-        
+
             yield return new WaitForSeconds(2f);
-       
             StartCoroutine(FinalCO());
-            
-            yield break; // This stops the coroutine here if count > 2
-         }
+            yield break;
+        }
 
+        // -----------------------------
+        // 2. LOGS PRIORITY
+        // -----------------------------
+        if (count > 2)
+        {
+            Debug.Log("PRIORITY: Logs dialogue triggered.");
 
-         
+            SubText.text = "Friend: ";
+            holder = "Thanks for collecting those logs. There's some soup in the communal pot. Don't ask what's in it.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(FinalCO());
+            yield break;
+        }
+
+        // -----------------------------
+        // 3. DEFAULT DIALOGUE
+        // -----------------------------
+        Debug.Log("PRIORITY: Default dialogue triggered.");
 
         SubText.text = "Me: ";
         holder = "Hey man, can I help with anything?";
-        foreach(char c in holder)
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
 
         yield return MousePress();
 
-              SubText.text = "Friend: ";
-        holder = "Hey there.  We could use some help collecting wood for the cabins. ";
-        foreach(char c in holder)
+        SubText.text = "Friend: ";
+        holder = "Hey there. We could use some help collecting wood for the cabins.";
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
-
 
         yield return MousePress();
 
-              SubText.text = "Friend: ";
-        holder = "The Axe is over by the barrels.  Are you in?";
-        foreach(char c in holder)
+        SubText.text = "Friend: ";
+        holder = "The Axe is over by the barrels. Are you in?";
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
 
         yield return new WaitForSeconds(1f);
-
         ChoicePack.SetActive(true);
-        
-        
-
-    }
-    
-    public void Choice1Void()
-    {
-        StartCoroutine(Choice1CO());
     }
 
-    public void Choice2Void()
-    {
-
-        StartCoroutine(Choice2CO());
-
-    }
-
-
-
-
+    // ------------------------------------------
+    // CHOICE BUTTONS
+    // ------------------------------------------
+    public void Choice1Void() => StartCoroutine(Choice1CO());
+    public void Choice2Void() => StartCoroutine(Choice2CO());
 
     IEnumerator Choice1CO()
     {
         ChoicePack.SetActive(false);
-    
-         SubText.text = "Me: ";
+
+        SubText.text = "Me: ";
         holder = "Yeah I can help out with that.";
-        foreach(char c in holder)
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-            
-
         }
-        
+
         yield return new WaitForSeconds(2f);
-        
-        
-
-   StartCoroutine(FinalCO());
-
+        StartCoroutine(FinalCO());
     }
 
-
-
-
-
-
-     IEnumerator Choice2CO()
+    IEnumerator Choice2CO()
     {
-
         ChoicePack.SetActive(false);
 
-            SubText.text = "Me: ";
+        SubText.text = "Me: ";
         holder = "No, sorry I'm busy at the moment.";
-        foreach(char c in holder)
+        foreach (char c in holder)
         {
             SubText.text += c;
             yield return new WaitForSeconds(time);
-
         }
 
         yield return new WaitForSeconds(2f);
-      
+        StartCoroutine(FinalCO());
+    }
 
-      StartCoroutine(FinalCO());
+    // ------------------------------------------
+    // RESET AFTER ANY DIALOGUE
+    // ------------------------------------------
+    IEnumerator FinalCO()
+    {
+        TalkToRedFriend = false;
+        TalkToActualFriend = false;
 
-        
+        TalkPanel.SetActive(false);
+        ChoicePack.SetActive(false);
+        SubText.text = "";
 
-
-
-
-        }
-
-        IEnumerator FinalCO()
-        {
-
-            //Check  bool
-
-            TalkToRedFriend = false;
-            TalkToActualFriend = false;
-
-            //reset everything for head turn animation
-
-            //Check bool
-            TalkPanel.SetActive(false);
-            FpsController.enabled = true;
-            ChoicePack.SetActive(false);
-            SubText.text = "";
-            //look at 
-
-
-             Cursor.visible = false;
-
-
-
-
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         LookAtScript.IKActive = false;
-        //look at
 
-        FpsController.enabled = true;
         PlayerVcam.enabled = true;
         TalkZoomVcam.enabled = false;
         RedFriendZoomVcam.enabled = false;
 
-        CanInteract= true;
-
-        Cursor.lockState = CursorLockMode.Locked;
+        FpsController.enabled = true;
+        CanInteract = true;
 
         yield return null;
     }
 
-
-IEnumerator MousePress()
-{
-    Debug.Log("Waiting for mouse press...");
-    while(!Input.GetMouseButtonDown(0))
-        yield return null;
-    Debug.Log("Mouse pressed!");
-}
-
-
-
-
-
-
+    // ------------------------------------------
+    // WAIT FOR MOUSE CLICK
+    // ------------------------------------------
+    IEnumerator MousePress()
+    {
+        Debug.Log("Waiting for mouse press...");
+        while (!Input.GetMouseButtonDown(0))
+            yield return null;
+        Debug.Log("Mouse pressed!");
+    }
 }

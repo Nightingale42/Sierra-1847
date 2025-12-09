@@ -5,7 +5,7 @@ using UnityEngine;
 public class EatingSystem : MonoBehaviour
 {
     private bool CanInteract = true;
-    private int SliceEaten = 0;
+    public static int SliceEaten = 0;
     [SerializeField] private GameObject[] soupbowls;
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip eatingclip;
