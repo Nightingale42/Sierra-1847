@@ -1,54 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtFunction : MonoBehaviour
 {
-public Animator animator;
+    [Header("Animators")]
+    public Animator animator;
+    public Animator redFriendAnimator;
 
-public Animator RedFriendAnimator;
+    [Header("Look Settings")]
+    public bool IKActive = false;
+    public Transform LookAtObj;
+    [Range(0f, 1f)]
+    public float LookWeight = 0f;
+    public float LookSpeed = 2f;
 
-public bool IKActive = false;
-
-public Transform LookAtObj = null; 
-
-public float LookWeight = 2f;
-
-public Caminteract CamInteraction;
-
-private void OnAnimatorIK(int layerIndex)
-{
-    if (this.gameObject.GetComponent<Animator>())
+    private void OnAnimatorIK(int layerIndex)
     {
-        if(IKActive)
+        if (!IKActive || LookAtObj == null)
         {
-            if (LookAtObj != null)
-            {
-                LookWeight = Mathf.Lerp(LookWeight, 1, Time.deltaTime * 2);
-
-                
-            }
+            LookWeight = Mathf.Lerp(LookWeight, 0f, Time.deltaTime * LookSpeed);
         }
         else
         {
-            LookWeight = Mathf.Lerp(LookWeight, 0, Time.deltaTime * 2);
-         
+            LookWeight = Mathf.Lerp(LookWeight, 1f, Time.deltaTime * LookSpeed);
         }
 
-            if(CamInteraction.TalkToActualFriend == true)
-            {
-                
-                animator.SetLookAtWeight(LookWeight);
-                animator.SetLookAtPosition(LookAtObj.position);
-            }
-            else if (CamInteraction.TalkToRedFriend == true)
-            {
-                 
-                RedFriendAnimator.SetLookAtWeight(LookWeight);
-                RedFriendAnimator.SetLookAtPosition(LookAtObj.position);
-            }
+        if (animator != null)
+        {
+            animator.SetLookAtWeight(LookWeight);
+            animator.SetLookAtPosition(LookAtObj.position);
+        }
 
-
+        if (redFriendAnimator != null)
+        {
+            redFriendAnimator.SetLookAtWeight(LookWeight);
+            redFriendAnimator.SetLookAtPosition(LookAtObj.position);
+        }
     }
-}
 }
