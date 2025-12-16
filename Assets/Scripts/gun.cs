@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class gun : MonoBehaviour
 {
     public Camera fpsCam;
@@ -12,10 +13,13 @@ public class gun : MonoBehaviour
     public float fireRate = 1f;
     public float maxShootDistanceToPlayer = 2f;
 
+
     private float nextTimeToFire = 2f;
     private GameObject playerObject;
 
+
     private AudioSource audioSource; // 🔊 Audio source for gunshot sound
+
 
     void Start()
     {
@@ -26,6 +30,7 @@ public class gun : MonoBehaviour
             Debug.LogError("No AudioSource found on this gun object!");
         }
 
+
         // Find the player
         playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject == null)
@@ -33,6 +38,7 @@ public class gun : MonoBehaviour
             Debug.LogError("Player object with 'Player' tag not found!");
         }
     }
+
 
     void Update()
     {
@@ -54,13 +60,16 @@ public class gun : MonoBehaviour
         }
     }
 
+
     void Shoot()
     {
         // 🔊 Play gunshot sound
         if (audioSource != null)
             audioSource.Play();
 
+
         muzzleFlash.Play();
+
 
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
