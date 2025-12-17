@@ -154,26 +154,26 @@ public class WagonCamInteract : MonoBehaviour
         }
 
         // -------- DEFAULT --------
-        yield return TypeLine("Me: ", "Hey man, can I help with anything?");
+        yield return TypeLine("Me: ", "I'm so ready to get out of here. I know the trip is short but I could not wait to leave.");
         yield return WaitForClick();
 
         yield return TypeLine("Friend: ",
-            "Hey there. We could use some help collecting wood for the cabins.");
+            "Yeah, I hear you. I've been waiting for this.");
         yield return WaitForClick();
 
         yield return TypeLine("Friend: ",
-            "The Axe is over by the barrels. Are you in?");
+            "So what's driving you west? Same as the rest of us I suppose.");
 
         ChoicePack.SetActive(true);
     }
 
     // ================= CHOICES =================
     public void Choice1Void() => StartCoroutine(ChoiceCO(
-        "Me: ", "Yeah I can help out with that."
+        "Me: ", "Gold, land... why not go west?"
     ));
 
     public void Choice2Void() => StartCoroutine(ChoiceCO(
-        "Me: ", "No, sorry I'm busy at the moment."
+        "Me: ", "I need to get away from my family."
     ));
 
     IEnumerator ChoiceCO(string speaker, string line)
