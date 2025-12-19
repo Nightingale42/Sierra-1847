@@ -9,38 +9,68 @@ public class EquipGun : MonoBehaviour
     public Transform WeaponParent;
 
     [Header("UI")]
-    public TextMeshProUGUI InteractionText; // Assign in Inspector
+    public TextMeshProUGUI InteractionText;
     public float FadeSpeed = 6f;
     public float DropTextDuration = 7f;
 
-    private bool isEquipped = false;
-    private bool playerInRange = false;
+    private bool isEquipped;
+    private bool playerInRange;
 
     private Coroutine fadeRoutine;
     private Coroutine dropTextTimer;
 
     void Start()
     {
-        Gun.GetComponent<Rigidbody>().isKinematic = true;
+        Gun.GetComponent<Rigidbody>().isKinematic = false;
         SetTextAlpha(0f);
     }
 
     void Update()
     {
+        if (!playerInRange)
+            return;
+
+        if (!isEquipped && Input.GetKeyDown(KeyCode.E))
+        {
+            EquipWeapon();
+        }
+
         if (isEquipped && Input.GetKeyDown(KeyCode.F))
         {
             Drop();
         }
     }
 
+    // ───────── TRIGGERS ─────────
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        playerInRange = true;
+
+        if (!isEquipped)
+            ShowText("Press E to equip");
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        playerInRange = false;
+        HideText();
+    }
+
+    // ───────── LOGIC ─────────
+
     void EquipWeapon()
     {
         Gun.GetComponent<Rigidbody>().isKinematic = true;
         Gun.GetComponent<MeshCollider>().enabled = false;
 
-        Gun.transform.position = WeaponParent.position;
-        Gun.transform.rotation = WeaponParent.rotation;
         Gun.transform.SetParent(WeaponParent);
+        Gun.transform.localPosition = Vector3.zero;
+        Gun.transform.localRotation = Quaternion.identity;
 
         isEquipped = true;
 
@@ -54,27 +84,14 @@ public class EquipGun : MonoBehaviour
 
     void Drop()
     {
-        WeaponParent.DetachChildren();
+        Gun.transform.SetParent(null);
 
-        Gun.transform.eulerAngles = new Vector3(Gun.transform.position.x, Gun.transform.position.z, Gun.transform.position.y);
         Gun.GetComponent<Rigidbody>().isKinematic = false;
         Gun.GetComponent<MeshCollider>().enabled = true;
 
         isEquipped = false;
-        playerInRange = false;
-
-        if (dropTextTimer != null)
-            StopCoroutine(dropTextTimer);
 
         HideText();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && Input.GetKey(KeyCode.E))
-        {
-            EquipWeapon();
-        }
     }
 
     // ───────── UI ─────────
@@ -103,7 +120,7 @@ public class EquipGun : MonoBehaviour
     {
         yield return new WaitForSeconds(DropTextDuration);
 
-        if (isEquipped) // only fade if still equipped
+        if (isEquipped)
             HideText();
     }
 

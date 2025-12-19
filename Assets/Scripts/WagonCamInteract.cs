@@ -2,69 +2,66 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WagonCamInteract : MonoBehaviour
 {
-    // ---------------- INTERACTION ----------------
+    // ================= INTERACTION =================
     [Header("Interaction")]
     public Transform RayOrigin;
     public Text InteractionText;
     public float InteractDistance = 2f;
     public bool CanInteract = true;
 
-    // ---------------- STATE ----------------
-    public bool TalkToActualFriend;
-    public bool TalkToRedFriend;
-
-    // ---------------- CAMERAS ----------------
+    // ================= CAMERAS =================
     [Header("Cameras")]
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
     public CinemachineVirtualCamera RedFriendZoomVcam;
 
-    // ---------------- PLAYER ----------------
+    // ================= PLAYER =================
     [Header("Player")]
     public PlayerMovement FpsController;
     public LookAtFunction LookAtScript;
 
-    // ---------------- UI ----------------
+    // ================= DIALOGUE UI =================
     [Header("Dialogue UI")]
     public GameObject TalkPanel;
     public GameObject ChoicePack;
     public Text SubText;
 
-    // ---------------- SYSTEMS ----------------
-    private SleepSystem sleepSystem;
-    private bool sleepEnabled;
+    // ================= NIGHT TRANSITION =================
+    [Header("Night Transition")]
+    public GameObject BlackPanel_GO;
+    public TextMeshProUGUI NightSubtext;
+    public string NightText = "Night 100";
+    public float FadeDelay = 2f;
+    public float WriteSpeed = 0.5f;
+    public int NextSceneIndex = 1;
 
-    // ---------------- DIALOGUE ----------------
-    private string holder;
+    // ================= STATE =================
     private float typeSpeed = 0.05f;
+    private bool endingDay;
 
-    // ---------------- WOOD ----------------
+    // ================= WOOD =================
     public static int count;
-
-    // --------------------------------------------------
-    void Awake()
-    {
-        sleepSystem = GetComponent<SleepSystem>();
-    }
 
     // --------------------------------------------------
     void Update()
     {
+        // If interaction is disabled, force-clear text
         if (!CanInteract || RayOrigin == null)
         {
-            InteractionText.text = "";
+            ClearInteractionText();
             return;
         }
 
         Ray ray = new Ray(RayOrigin.position, RayOrigin.forward);
-        Debug.DrawRay(ray.origin, ray.direction * InteractDistance, Color.green);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, InteractDistance))
         {
-            InteractionText.text = "";
+            ClearInteractionText();
             return;
         }
 
@@ -75,6 +72,7 @@ public class WagonCamInteract : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 CanInteract = false;
+                ClearInteractionText();
                 StartCoroutine(TalkToFriendCO());
             }
         }
@@ -85,12 +83,13 @@ public class WagonCamInteract : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 CanInteract = false;
+                ClearInteractionText();
                 StartCoroutine(TalkToRedFriendCO());
             }
         }
         else
         {
-            InteractionText.text = "";
+            ClearInteractionText();
         }
     }
 
@@ -112,7 +111,7 @@ public class WagonCamInteract : MonoBehaviour
             "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.");
 
         yield return WaitForClick();
-        yield return ExitDialogue();
+        yield return ExitDialogue(false);
     }
 
     // ================= MAIN FRIEND =================
@@ -129,78 +128,63 @@ public class WagonCamInteract : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         TalkPanel.SetActive(true);
 
-        // -------- PRIORITY 1: SOUP --------
-        if (EatingSystem.SliceEaten > 2)
-        {
-            EnableSleepSystem();
-
-            yield return TypeLine("Friend: ",
-                "Looks like you got some dinner. Probably best to head to bed, we've got a big day ahead.");
-
-            yield return new WaitForSeconds(2f);
-            yield return ExitDialogue();
-            yield break;
-        }
-
-        // -------- PRIORITY 2: LOGS --------
+        // -------- LOGS ACKNOWLEDGEMENT --------
         if (count > 2)
         {
             yield return TypeLine("Friend: ",
                 "Thanks for collecting those logs. There's some soup in the communal pot. Don't ask what's in it.");
 
             yield return new WaitForSeconds(2f);
-            yield return ExitDialogue();
+        }
+        else
+        {
+            // -------- DEFAULT CONVERSATION --------
+            yield return TypeLine("Me: ",
+                "I'm so ready to get out of here. I know the trip is short but I could not wait to leave.");
+            yield return WaitForClick();
+
+            yield return TypeLine("Friend: ",
+                "Yeah, I hear you. I've been waiting for this.");
+            yield return WaitForClick();
+
+            yield return TypeLine("Friend: ",
+                "So what's driving you west? Same as the rest of us I suppose.");
+
+            ChoicePack.SetActive(true);
             yield break;
         }
 
-        // -------- DEFAULT --------
-        yield return TypeLine("Me: ", "I'm so ready to get out of here. I know the trip is short but I could not wait to leave.");
-        yield return WaitForClick();
-
+        // -------- END DAY --------
         yield return TypeLine("Friend: ",
-            "Yeah, I hear you. I've been waiting for this.");
-        yield return WaitForClick();
+            "Probably best to head to bed. We've got a big day ahead.");
 
-        yield return TypeLine("Friend: ",
-            "So what's driving you west? Same as the rest of us I suppose.");
-
-        ChoicePack.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        yield return ExitDialogue(true);
     }
 
     // ================= CHOICES =================
-    public void Choice1Void() => StartCoroutine(ChoiceCO(
-        "Me: ", "Gold, land... why not go west?"
-    ));
+    public void Choice1Void() =>
+        StartCoroutine(ChoiceCO("Me: ", "Gold, land... why not go west?"));
 
-    public void Choice2Void() => StartCoroutine(ChoiceCO(
-        "Me: ", "I need to get away from my family."
-    ));
+    public void Choice2Void() =>
+        StartCoroutine(ChoiceCO("Me: ", "I need to get away from my family."));
 
     IEnumerator ChoiceCO(string speaker, string line)
     {
         ChoicePack.SetActive(false);
         yield return TypeLine(speaker, line);
         yield return new WaitForSeconds(2f);
-        yield return ExitDialogue();
+        yield return ExitDialogue(true);
     }
 
-    // ================= HELPERS =================
-    void EnterDialogue()
+    // ================= EXIT =================
+    IEnumerator ExitDialogue(bool endDay)
     {
-        TalkToActualFriend = true;
-        InteractionText.text = "";
+        if (endingDay) yield break;
+        endingDay = endDay;
 
-        FpsController.enabled = false;
-        LookAtScript.IKActive = true;
-
-        TalkZoomVcam.enabled = false;
-        RedFriendZoomVcam.enabled = false;
-    }
-
-    IEnumerator ExitDialogue()
-    {
-        TalkToActualFriend = false;
-        TalkToRedFriend = false;
+        // HARD CLEAR INTERACTION TEXT
+        ClearInteractionText();
 
         TalkPanel.SetActive(false);
         ChoicePack.SetActive(false);
@@ -216,9 +200,50 @@ public class WagonCamInteract : MonoBehaviour
         RedFriendZoomVcam.enabled = false;
 
         FpsController.enabled = true;
-        CanInteract = true;
+        CanInteract = !endDay;
 
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
+
+        if (endDay)
+            yield return StartCoroutine(NightTransitionCO());
+    }
+
+    // ================= NIGHT TRANSITION =================
+    IEnumerator NightTransitionCO()
+    {
+        ClearInteractionText();
+        BlackPanel_GO.SetActive(true);
+
+        yield return new WaitForSeconds(FadeDelay);
+
+        NightSubtext.text = "";
+
+        foreach (char c in NightText)
+        {
+            NightSubtext.text += c;
+            yield return new WaitForSeconds(WriteSpeed);
+        }
+
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(NextSceneIndex);
+    }
+
+    // ================= HELPERS =================
+    void EnterDialogue()
+    {
+        ClearInteractionText();
+
+        FpsController.enabled = false;
+        LookAtScript.IKActive = true;
+
+        TalkZoomVcam.enabled = false;
+        RedFriendZoomVcam.enabled = false;
+    }
+
+    void ClearInteractionText()
+    {
+        if (InteractionText != null)
+            InteractionText.text = "";
     }
 
     IEnumerator TypeLine(string speaker, string line)
@@ -236,13 +261,5 @@ public class WagonCamInteract : MonoBehaviour
     {
         while (!Input.GetMouseButtonDown(0))
             yield return null;
-    }
-
-    void EnableSleepSystem()
-    {
-        if (sleepEnabled || sleepSystem == null) return;
-
-        sleepEnabled = true;
-        sleepSystem.enabled = true;
     }
 }

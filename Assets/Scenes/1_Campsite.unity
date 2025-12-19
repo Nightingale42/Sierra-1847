@@ -2249,24 +2249,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2040558350}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &604025891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604025890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528f97d62a59e6d4cb3a14de5ad47db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1959997947}
-  redFriendAnimator: {fileID: 0}
-  IKActive: 0
-  LookAtObj: {fileID: 1581759157}
-  LookWeight: 2
-  LookSpeed: 2
 --- !u!65 &604025892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2309,6 +2291,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &604025895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604025890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f81c6731375a5408aba5e688eec30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1959997947}
+  RedFriendAnimator: {fileID: 604025893}
+  IKActive: 0
+  LookAtObj: {fileID: 1108947546}
+  LookWeight: 0
+  CamInteract: {fileID: 397406346}
 --- !u!1 &607170131
 GameObject:
   m_ObjectHideFlags: 0
@@ -5172,6 +5172,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e488b5533359294488f3848ad67a26a2, type: 3}
+--- !u!1 &1756386082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2232353917242311570, guid: 97744ea80f5c75a4ea28b901107a6c70,
+    type: 3}
+  m_PrefabInstance: {fileID: 4725965593096226377}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1758741104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5881,18 +5887,24 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 4725965593096226377}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1959997950 stripped
+--- !u!114 &1959997953
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4849597216346695555, guid: 97744ea80f5c75a4ea28b901107a6c70,
-    type: 3}
-  m_PrefabInstance: {fileID: 4725965593096226377}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1756386082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528f97d62a59e6d4cb3a14de5ad47db6, type: 3}
+  m_Script: {fileID: 11500000, guid: b8f81c6731375a5408aba5e688eec30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1959997947}
+  RedFriendAnimator: {fileID: 604025893}
+  IKActive: 0
+  LookAtObj: {fileID: 1108947546}
+  LookWeight: 0
+  CamInteract: {fileID: 397406346}
 --- !u!1001 &2020016021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6094,7 +6106,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c0e0c84d458f6824981d274f5319f2a2,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 604025891}
+      addedObject: {fileID: 604025895}
   m_SourcePrefab: {fileID: 100100000, guid: c0e0c84d458f6824981d274f5319f2a2, type: 3}
 --- !u!1 &2082585385
 GameObject:
@@ -6573,7 +6585,7 @@ PrefabInstance:
         type: 3}
       propertyPath: LookAtScript
       value: 
-      objectReference: {fileID: 1959997950}
+      objectReference: {fileID: 1959997953}
     - target: {fileID: 2438627859312192555, guid: 2ecaf6fca574f1a4d9c31a4ee6aefda4,
         type: 3}
       propertyPath: FpsController
@@ -6966,6 +6978,11 @@ PrefabInstance:
       objectReference: {fileID: 1581759157}
     - target: {fileID: 4849597216346695555, guid: 97744ea80f5c75a4ea28b901107a6c70,
         type: 3}
+      propertyPath: LookWeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849597216346695555, guid: 97744ea80f5c75a4ea28b901107a6c70,
+        type: 3}
       propertyPath: CamInteraction
       value: 
       objectReference: {fileID: 397406346}
@@ -6974,10 +6991,15 @@ PrefabInstance:
       propertyPath: RedFriendAnimator
       value: 
       objectReference: {fileID: 604025893}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4849597216346695555, guid: 97744ea80f5c75a4ea28b901107a6c70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2232353917242311570, guid: 97744ea80f5c75a4ea28b901107a6c70,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1959997953}
   m_SourcePrefab: {fileID: 100100000, guid: 97744ea80f5c75a4ea28b901107a6c70, type: 3}
 --- !u!33 &5334037118384555524
 MeshFilter:

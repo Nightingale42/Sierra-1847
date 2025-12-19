@@ -9,7 +9,7 @@ public class Caminteract : MonoBehaviour
     // Interaction
     public bool TalkToActualFriend = false;
     public bool TalkToRedFriend = false;
-    public LookAtFunction LookAtScript;
+    public LookAt2 LookAtScript;
     public Text InteractionText;
     private float InteractDistance = 2f;
     public bool CanInteract = true;
