@@ -8,25 +8,31 @@ public class Collectible : MonoBehaviour
     public static event Action OnCollected;
     public static int total;
 
-    void Awake() => total++;
+    [Header("Audio")]
+    public AudioClip woodCollectSound;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
+        total++;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            // Fire collection event
             OnCollected?.Invoke();
+
+            // Play sound at this object's position
+            if (woodCollectSound != null)
+            {
+                AudioSource.PlayClipAtPoint(
+                    woodCollectSound,
+                    transform.position
+                );
+            }
+
+            // Destroy collectible
             Destroy(gameObject);
         }
     }
