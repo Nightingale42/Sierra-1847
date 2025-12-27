@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.33333334
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 48a3775f6c2bad044918a16d2994657b, type: 2}
   m_BuildHeightMesh: 0
@@ -1177,7 +1177,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7158436452416506637}
+      objectReference: {fileID: 7158436452416506638}
     - target: {fileID: 516257604403512914, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1186,18 +1186,18 @@ PrefabInstance:
     - target: {fileID: 516257604403512914, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WagonCamInteract, Assembly-CSharp
+      value: D2WagonCamInteract, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 942130871538462546, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_Text
-      value: Oppertunity
+      value: Optimistic
       objectReference: {fileID: 0}
     - target: {fileID: 3885284014822669865, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7158436452416506637}
+      objectReference: {fileID: 7158436452416506638}
     - target: {fileID: 3885284014822669865, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1206,12 +1206,12 @@ PrefabInstance:
     - target: {fileID: 3885284014822669865, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WagonCamInteract, Assembly-CSharp
+      value: D2WagonCamInteract, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5152732861898952525, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
       propertyPath: m_Text
-      value: Something New
+      value: Pessimistic
       objectReference: {fileID: 0}
     - target: {fileID: 5410239613873140154, guid: b4020a6a0b9ffef43aab9376f3753816,
         type: 3}
@@ -1633,6 +1633,7 @@ GameObject:
   - component: {fileID: 7158436452416506636}
   - component: {fileID: 3027394102416984652}
   - component: {fileID: 7158436452416506637}
+  - component: {fileID: 7158436452416506638}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2427,7 +2428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149073720052970150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b76e8ebc2dc334048a083bf3b214d996, type: 3}
   m_Name: 
@@ -2447,6 +2448,36 @@ MonoBehaviour:
   BlackPanel_GO: {fileID: 726594085}
   NightSubtext: {fileID: 1415856832}
   NightText: Later that day
+  FadeDelay: 2
+  WriteSpeed: 0.5
+  NextSceneIndex: 1
+--- !u!114 &7158436452416506638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149073720052970150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75acbca436f8cbf4e9461402ee89b40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RayOrigin: {fileID: 1969016782}
+  InteractionText: {fileID: 1195045216}
+  InteractDistance: 2
+  CanInteract: 1
+  PlayerVcam: {fileID: 1969016781}
+  TalkZoomVcam: {fileID: 1754282204}
+  RedFriendZoomVcam: {fileID: 975154053}
+  FpsController: {fileID: 2203552680788521483}
+  LookAtScript: {fileID: 429221859}
+  TalkPanel: {fileID: 5410239615260973768}
+  ChoicePack: {fileID: 1782132798082605702}
+  SubText: {fileID: 4700735544696246078}
+  BlackPanel_GO: {fileID: 726594085}
+  NightSubtext: {fileID: 1415856832}
+  NightText: Night 300
   FadeDelay: 2
   WriteSpeed: 0.5
   NextSceneIndex: 1

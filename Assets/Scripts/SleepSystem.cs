@@ -104,6 +104,6 @@ public class SleepSystem : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

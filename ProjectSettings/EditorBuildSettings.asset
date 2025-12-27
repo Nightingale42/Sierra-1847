@@ -9,12 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Carriage D1.unity
     guid: 9ab4bf161d8b18e4aba1ce269e55277b
   - enabled: 1
-    path: Assets/Scenes/1_Campsite.unity
-    guid: 0716167323cf44e40879082ae2b3f286
+    path: Assets/Scenes/D1Campsite.unity
+    guid: edf182716fda3dc438d96f072dd05bca
   - enabled: 1
+    path: Assets/Scenes/Carriage D2.unity
+    guid: 882a8393c97099e498077b79f2cbae08
+  - enabled: 1
+    path: Assets/Scenes/D2Campsite.unity
+    guid: 4c678f94bf9548646aa73e4f23f14c25
+  - enabled: 0
     path: Assets/Scenes/GameOver.unity
     guid: 93108000ebcf47041bdba33194027e05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameWin.unity
     guid: f8af25ec18486844cb0536340201d5dc
+  - enabled: 0
+    path: Assets/Scenes/1_Campsite.unity
+    guid: 0716167323cf44e40879082ae2b3f286
   m_configObjects: {}

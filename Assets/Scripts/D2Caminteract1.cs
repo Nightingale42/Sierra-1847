@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
 
-public class Caminteract : MonoBehaviour
+public class D2Caminteract : MonoBehaviour
 {
     // Interaction
     public bool TalkToActualFriend = false;
