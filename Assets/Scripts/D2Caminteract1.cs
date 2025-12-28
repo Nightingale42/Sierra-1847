@@ -6,24 +6,24 @@ using Cinemachine;
 
 public class D2Caminteract : MonoBehaviour
 {
-    // Interaction
+    // ---------------- INTERACTION ----------------
     public bool TalkToActualFriend = false;
     public bool TalkToRedFriend = false;
-    public LookAt2 LookAtScript;
+    public LookAt3 LookAtScript;
     public Text InteractionText;
     private float InteractDistance = 2f;
     public bool CanInteract = true;
 
-    // Wood collecting
+    // ---------------- PROGRESSION ----------------
     public static int count;
 
-    // Cameras & Movement
+    // ---------------- CAMERAS ----------------
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
     public CinemachineVirtualCamera RedFriendZoomVcam;
     public NewPlayerMovement FpsController;
 
-    // Dialogue UI
+    // ---------------- UI ----------------
     public GameObject TalkPanel;
     public GameObject ChoicePack;
     public Text SubText;
@@ -31,30 +31,29 @@ public class D2Caminteract : MonoBehaviour
     string holder;
     float time = 0.05f;
 
-    // Sleep System
+    // ---------------- SLEEP SYSTEM ----------------
     private SleepSystem sleepSystem;
     private bool sleepEnabled = false;
 
-    // ------------------------------------------
     void Start()
     {
-        sleepSystem = GetComponent<SleepSystem>();  // Find SleepSystem on same GameObject
+        sleepSystem = GetComponent<SleepSystem>();
     }
 
     // ------------------------------------------
-    // UPDATE – Interaction Raycast
+    // UPDATE
     // ------------------------------------------
     void Update()
     {
         if (!CanInteract)
             return;
 
-        Ray ray1 = new Ray(transform.position, transform.forward);
-        RaycastHit hit1;
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
 
-        if (Physics.Raycast(ray1, out hit1, InteractDistance))
+        if (Physics.Raycast(ray, out hit, InteractDistance))
         {
-            if (hit1.collider.CompareTag("Friend"))
+            if (hit.collider.CompareTag("Friend"))
             {
                 InteractionText.text = "Talk To Him";
 
@@ -64,7 +63,7 @@ public class D2Caminteract : MonoBehaviour
                     StartCoroutine(TalkToFriendCO());
                 }
             }
-            else if (hit1.collider.CompareTag("RedFriend"))
+            else if (hit.collider.CompareTag("RedFriend"))
             {
                 InteractionText.text = "Talk to Red Friend";
 
@@ -86,7 +85,7 @@ public class D2Caminteract : MonoBehaviour
     }
 
     // ------------------------------------------
-    // RED FRIEND DIALOGUE
+    // RED FRIEND
     // ------------------------------------------
     IEnumerator TalkToRedFriendCO()
     {
@@ -101,9 +100,9 @@ public class D2Caminteract : MonoBehaviour
         LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
+
         TalkPanel.SetActive(true);
 
-        // Dialogue 1
         SubText.text = "Me: ";
         holder = "How're you holding up kid?";
         foreach (char c in holder)
@@ -114,7 +113,6 @@ public class D2Caminteract : MonoBehaviour
 
         yield return MousePress();
 
-        // Dialogue 2
         SubText.text = "Kid: ";
         holder = "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.";
         foreach (char c in holder)
@@ -129,7 +127,7 @@ public class D2Caminteract : MonoBehaviour
     }
 
     // ------------------------------------------
-    // MAIN FRIEND DIALOGUE (with priority system)
+    // MAIN FRIEND DIALOGUE
     // ------------------------------------------
     IEnumerator TalkToFriendCO()
     {
@@ -150,37 +148,15 @@ public class D2Caminteract : MonoBehaviour
 
         TalkPanel.SetActive(true);
 
-        Debug.Log("TalkToFriendCO started. count = " + count);
-        Debug.Log("TalkToFriendCO started. SliceEaten = " + EatingSystem.SliceEaten);
+        // ---------- PRIORITY CHECKS ----------
 
-        // ==================================================
-        // PRIORITY SYSTEM
-        // 1. Soup Dialogue (also activates SleepSystem)
-        // 2. Logs Dialogue
-        // 3. Default Dialogue
-        // ==================================================
-
-        // -----------------------------
-        // 1. SOUP PRIORITY
-        // -----------------------------
         if (EatingSystem.SliceEaten > 2)
         {
-            Debug.Log("PRIORITY: Soup dialogue triggered.");
-
-            // Enable SleepSystem ONCE
             if (!sleepEnabled)
             {
                 sleepEnabled = true;
-
                 if (sleepSystem != null)
-                {
                     sleepSystem.enabled = true;
-                    Debug.Log("SleepSystem ENABLED because SliceEaten > 2");
-                }
-                else
-                {
-                    Debug.LogError("SleepSystem NOT FOUND on this GameObject!");
-                }
             }
 
             SubText.text = "Friend: ";
@@ -196,13 +172,8 @@ public class D2Caminteract : MonoBehaviour
             yield break;
         }
 
-        // -----------------------------
-        // 2. LOGS PRIORITY
-        // -----------------------------
         if (count > 2)
         {
-            Debug.Log("PRIORITY: Logs dialogue triggered.");
-
             SubText.text = "Friend: ";
             holder = "Thanks for collecting those logs. There's some soup in the communal pot. Don't ask what's in it.";
             foreach (char c in holder)
@@ -216,13 +187,19 @@ public class D2Caminteract : MonoBehaviour
             yield break;
         }
 
-        // -----------------------------
-        // 3. DEFAULT DIALOGUE
-        // -----------------------------
-        Debug.Log("PRIORITY: Default dialogue triggered.");
+        // ---------- DEFAULT DIALOGUE ----------
+        SubText.text = "Friend: ";
+        holder = "I'm real hungry. Damn Marison keeping all the food to himself.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
 
         SubText.text = "Me: ";
-        holder = "Hey man, can I help with anything?";
+        holder = "You reckon I could scrounge up something? Theres got to be some edible stuff in these woods.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -232,17 +209,7 @@ public class D2Caminteract : MonoBehaviour
         yield return MousePress();
 
         SubText.text = "Friend: ";
-        holder = "Hey there. We could use some help collecting wood for the cabins.";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        yield return MousePress();
-
-        SubText.text = "Friend: ";
-        holder = "The Axe is over by the barrels. Are you in?";
+        holder = "You think so? Might just be worth it. Could be some wild carrots or something out there, i'd even eat a wild mushroom right about now.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -254,7 +221,7 @@ public class D2Caminteract : MonoBehaviour
     }
 
     // ------------------------------------------
-    // CHOICE BUTTONS
+    // CHOICES
     // ------------------------------------------
     public void Choice1Void() => StartCoroutine(Choice1CO());
     public void Choice2Void() => StartCoroutine(Choice2CO());
@@ -264,7 +231,17 @@ public class D2Caminteract : MonoBehaviour
         ChoicePack.SetActive(false);
 
         SubText.text = "Me: ";
-        holder = "Yeah I can help out with that.";
+        holder = "Dude you're making me hungry... i'm in.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        SubText.text = "Friend: ";
+        holder = "haha, you're easy. Let me know if you find anything.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -280,7 +257,7 @@ public class D2Caminteract : MonoBehaviour
         ChoicePack.SetActive(false);
 
         SubText.text = "Me: ";
-        holder = "No, sorry I'm busy at the moment.";
+        holder = "That sounds like a terrible idea.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -292,7 +269,7 @@ public class D2Caminteract : MonoBehaviour
     }
 
     // ------------------------------------------
-    // RESET AFTER ANY DIALOGUE
+    // RESET
     // ------------------------------------------
     IEnumerator FinalCO()
     {
@@ -318,14 +295,9 @@ public class D2Caminteract : MonoBehaviour
         yield return null;
     }
 
-    // ------------------------------------------
-    // WAIT FOR MOUSE CLICK
-    // ------------------------------------------
     IEnumerator MousePress()
     {
-        Debug.Log("Waiting for mouse press...");
         while (!Input.GetMouseButtonDown(0))
             yield return null;
-        Debug.Log("Mouse pressed!");
     }
 }

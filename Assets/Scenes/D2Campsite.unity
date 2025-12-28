@@ -1720,18 +1720,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1748915175915083955}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &397406346 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2438627859312192555, guid: 2ecaf6fca574f1a4d9c31a4ee6aefda4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1748915175915083955}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 570996466}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abaf911a90bdfe74bb024a702ee39834, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &436796193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,8 +2544,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 397406346}
-        m_TargetAssemblyTypeName: Caminteract, Assembly-CSharp
+      - m_Target: {fileID: 570996473}
+        m_TargetAssemblyTypeName: D2Caminteract, Assembly-CSharp
         m_MethodName: Choice1Void
         m_Mode: 1
         m_Arguments:
@@ -2642,9 +2630,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TalkToActualFriend: 0
   TalkToRedFriend: 0
-  LookAtScript: {fileID: 604025895}
+  LookAtScript: {fileID: 1959997956}
   InteractionText: {fileID: 104615005}
-  CanInteract: 0
+  CanInteract: 1
   PlayerVcam: {fileID: 570996468}
   TalkZoomVcam: {fileID: 342021900}
   RedFriendZoomVcam: {fileID: 162342429}
@@ -2864,7 +2852,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &604025895
+--- !u!114 &604025897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2873,15 +2861,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 604025890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8f81c6731375a5408aba5e688eec30d, type: 3}
+  m_Script: {fileID: 11500000, guid: 59690f01a9e4c8c4489fbfa657e28748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1959997947}
-  RedFriendAnimator: {fileID: 604025893}
+  RedFriendAnimator: {fileID: 1959997947}
   IKActive: 0
   LookAtObj: {fileID: 1108947546}
   LookWeight: 0
-  CamInteract: {fileID: 397406346}
+  D2CamInteract: {fileID: 570996473}
 --- !u!1 &613699224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 572cc98162148534fa36ebb1f63e9185,
@@ -4795,8 +4783,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 397406346}
-        m_TargetAssemblyTypeName: Caminteract, Assembly-CSharp
+      - m_Target: {fileID: 570996473}
+        m_TargetAssemblyTypeName: D2Caminteract, Assembly-CSharp
         m_MethodName: Choice2Void
         m_Mode: 1
         m_Arguments:
@@ -6390,7 +6378,7 @@ Transform:
   m_GameObject: {fileID: 1581341712}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.46, y: 1.51, z: -0.1915561}
+  m_LocalPosition: {x: 9.46, y: -0.66, z: -0.1915561}
   m_LocalScale: {x: 1, y: 0.09564347, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7951,7 +7939,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c0e0c84d458f6824981d274f5319f2a2,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 604025895}
+      addedObject: {fileID: 604025897}
   m_SourcePrefab: {fileID: 100100000, guid: c0e0c84d458f6824981d274f5319f2a2, type: 3}
 --- !u!1 &2082585385
 GameObject:
@@ -8719,13 +8707,14 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 953478473}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2438627859312192555, guid: 2ecaf6fca574f1a4d9c31a4ee6aefda4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9076522287772883020, guid: 2ecaf6fca574f1a4d9c31a4ee6aefda4,
         type: 3}
-      insertIndex: 6
+      insertIndex: 5
       addedObject: {fileID: 570996473}
   m_SourcePrefab: {fileID: 100100000, guid: 2ecaf6fca574f1a4d9c31a4ee6aefda4, type: 3}
 --- !u!4 &1845415593277921114
@@ -8987,7 +8976,7 @@ PrefabInstance:
         type: 3}
       propertyPath: CamInteraction
       value: 
-      objectReference: {fileID: 397406346}
+      objectReference: {fileID: 0}
     - target: {fileID: 4849597216346695555, guid: 97744ea80f5c75a4ea28b901107a6c70,
         type: 3}
       propertyPath: RedFriendAnimator
