@@ -33,11 +33,11 @@ public class D2Caminteract : MonoBehaviour
     string holder;
     float time = 0.05f;
 
-    private SleepSystem sleepSystem;
+    private D2SleepSystem sleepSystem;
 
     void Start()
     {
-        sleepSystem = GetComponent<SleepSystem>();
+        sleepSystem = GetComponent<D2SleepSystem>();
 
         // Ensure we have an AudioSource
         audioSource = GetComponent<AudioSource>();
