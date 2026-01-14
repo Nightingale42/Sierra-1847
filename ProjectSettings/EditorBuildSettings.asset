@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CarriageD3.unity
     guid: fc1b44f327dff3f4995e92a30a16d71a
+  - enabled: 1
+    path: Assets/Scenes/D3Campsite.unity
+    guid: fede86cf2aef38c448f27a9c3eaebdde
   - enabled: 0
     path: Assets/Scenes/GameOver.unity
     guid: 93108000ebcf47041bdba33194027e05

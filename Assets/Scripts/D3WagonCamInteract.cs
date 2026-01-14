@@ -106,18 +106,16 @@ public class D3WagonCamInteract : MonoBehaviour
         if (CarriageObject == null) return;
 
         NavMeshAgent agent = CarriageObject.GetComponent<NavMeshAgent>();
+        if (agent == null) return;
 
-        if (agent != null)
+        if (AudioSource != null)
         {
-            if (AudioSource != null && Crash != null)
-                AudioSource.PlayOneShot(Crash);
-                AudioSource.PlayOneShot(Horse);
-
-            Destroy(agent);
-
-            // Start forced dialogue after crash
-            StartCoroutine(ForcedFriendDialogueCO());
+            if (Crash != null) AudioSource.PlayOneShot(Crash);
+            if (Horse != null) AudioSource.PlayOneShot(Horse);
         }
+
+        Destroy(agent);
+        StartCoroutine(ForcedFriendDialogueCO());
     }
 
     // ================= FORCED FRIEND DIALOGUE =================
@@ -125,33 +123,34 @@ public class D3WagonCamInteract : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        // Lock player control
         CanInteract = false;
         FpsController.enabled = false;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        // Force look using existing IK system
         LookAtScript.IKActive = true;
 
-        // Force camera
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = true;
 
         yield return new WaitForSeconds(0.5f);
-
         TalkPanel.SetActive(true);
 
         yield return TypeLine("Friend: ", "What was that?");
         yield return WaitForClick();
 
-         yield return TypeLine("Me: ", "It kind of felt like the horse got struck by lightning");
+        yield return TypeLine("Me: ", "It kind of felt like the horse got struck by lightning");
         yield return WaitForClick();
 
- yield return TypeLine("Friend: ", "Let's get out and check.");
+        yield return TypeLine("Friend: ", "Let's get out and check.");
         yield return WaitForClick();
 
+        // 🔧 CLEAR DIALOGUE BEFORE TRANSITION
+        SubText.text = "";
+        TalkPanel.SetActive(false);
+
+        yield return StartCoroutine(NightTransitionCO());
 
         yield return ExitDialogue(false);
     }
@@ -170,7 +169,10 @@ public class D3WagonCamInteract : MonoBehaviour
         yield return TypeLine("Me: ", "How're you holding up kid?");
         yield return WaitForClick();
 
-        yield return TypeLine("Kid: ", "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.");
+        yield return TypeLine(
+            "Kid: ",
+            "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days."
+        );
         yield return WaitForClick();
 
         yield return ExitDialogue(false);
@@ -206,21 +208,30 @@ public class D3WagonCamInteract : MonoBehaviour
             yield return TypeLine("Friend: ", "You're kidding");
             yield return WaitForClick();
 
-            yield return TypeLine("Me: ", "Nope. I have a feeling we won't be finding any more carrots.");
+            yield return TypeLine(
+                "Me: ",
+                "Nope. I have a feeling we won't be finding any more carrots."
+            );
 
             ChoicePack.SetActive(true);
             yield break;
         }
 
-        yield return TypeLine("Friend: ", "Probably best to head to bed. We've got a big day ahead.");
+        yield return TypeLine(
+            "Friend: ",
+            "Probably best to head to bed. We've got a big day ahead."
+        );
         yield return new WaitForSeconds(1f);
 
         yield return ExitDialogue(true);
     }
 
     // ================= CHOICES =================
-    public void Choice1Void() => StartCoroutine(ChoiceCO("Me: ", "Dude. We're screwed."));
-    public void Choice2Void() => StartCoroutine(ChoiceCO("Me: ", "As long as it doesn't get too high we should be fine."));
+    public void Choice1Void() =>
+        StartCoroutine(ChoiceCO("Me: ", "Dude. We're screwed."));
+
+    public void Choice2Void() =>
+        StartCoroutine(ChoiceCO("Me: ", "As long as it doesn't get too high we should be fine."));
 
     IEnumerator ChoiceCO(string speaker, string line)
     {
@@ -232,26 +243,50 @@ public class D3WagonCamInteract : MonoBehaviour
         yield return TypeLine("Friend: ", "Yeah man... Thats the spirit!");
         yield return WaitForClick();
 
-        yield return TypeLine("Friend: ", "I mean... you're from Ohio right? Plenty of snow there, shouldn't be anything new.");
+        yield return TypeLine(
+            "Friend: ",
+            "I mean... you're from Ohio right? Plenty of snow there, shouldn't be anything new."
+        );
         yield return WaitForClick();
 
         RemoveNavMeshAgent();
-
         yield return ExitDialogue(true);
+    }
+
+    // ================= NIGHT TRANSITION =================
+    IEnumerator NightTransitionCO()
+    {
+        if (BlackPanel_GO != null)
+            BlackPanel_GO.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (NightSubtext != null)
+        {
+            NightSubtext.text = "";
+
+            foreach (char c in NightText)
+            {
+                NightSubtext.text += c;
+                yield return new WaitForSeconds(typeSpeed);
+            }
+        }
+
+        yield return new WaitForSeconds(FadeDelay);
+        SceneManager.LoadScene(5);
     }
 
     // ================= EXIT =================
     IEnumerator ExitDialogue(bool endDay)
     {
         if (endingDay) yield break;
-
         endingDay = endDay;
 
         ClearInteractionText();
-        TalkPanel.SetActive(false);
         ChoicePack.SetActive(false);
         SubText.text = "";
 
+        TalkPanel.SetActive(false);
         LookAtScript.IKActive = false;
 
         PlayerVcam.enabled = true;
