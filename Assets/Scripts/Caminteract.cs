@@ -232,7 +232,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
         SubText.text = "Friend: ";
-        holder = "Hey there. We could use some help collecting wood for the cabins.";
+        holder = "Hey there. We could use some help collecting wood for the fire tonight.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -242,7 +242,7 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
         SubText.text = "Friend: ";
-        holder = "The Axe is over by the barrels. Are you in?";
+        holder = "The Axe is over by the barrels. Oh- and try to only chop the dead trees. They burn easier.";
         foreach (char c in holder)
         {
             SubText.text += c;
