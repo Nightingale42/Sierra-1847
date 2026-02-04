@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/1_Campsite.unity
     guid: 0716167323cf44e40879082ae2b3f286
+  - enabled: 1
+    path: Assets/Scenes/D3P2Campsite.unity
+    guid: f5d82f92bedd5ad479bf711d3bb66159
   m_configObjects: {}
