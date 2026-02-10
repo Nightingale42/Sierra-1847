@@ -9,6 +9,7 @@ public class Caminteract : MonoBehaviour
     // Interaction
     public bool TalkToActualFriend = false;
     public bool TalkToRedFriend = false;
+    public bool TalkToBlueFriend = false;
     public LookAt2 LookAtScript;
     public Text InteractionText;
     private float InteractDistance = 2f;
@@ -21,6 +22,7 @@ public class Caminteract : MonoBehaviour
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
     public CinemachineVirtualCamera RedFriendZoomVcam;
+    public CinemachineVirtualCamera BlueFriendZoomVcam;
     public NewPlayerMovement FpsController;
 
     // Dialogue UI
@@ -44,39 +46,44 @@ public class Caminteract : MonoBehaviour
     // ------------------------------------------
     // UPDATE – Interaction Raycast
     // ------------------------------------------
-    void Update()
+  void Update()
+{
+    if (!CanInteract)
+        return;
+
+    Ray ray1 = new Ray(transform.position, transform.forward);
+    RaycastHit hit1;
+
+    if (Physics.Raycast(ray1, out hit1, InteractDistance))
     {
-        if (!CanInteract)
-            return;
-
-        Ray ray1 = new Ray(transform.position, transform.forward);
-        RaycastHit hit1;
-
-        if (Physics.Raycast(ray1, out hit1, InteractDistance))
+        if (hit1.collider.CompareTag("Friend"))
         {
-            if (hit1.collider.CompareTag("Friend"))
-            {
-                InteractionText.text = "Talk To Him";
+            InteractionText.text = "Talk To Him";
 
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    CanInteract = false;
-                    StartCoroutine(TalkToFriendCO());
-                }
-            }
-            else if (hit1.collider.CompareTag("RedFriend"))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                InteractionText.text = "Talk to Red Friend";
+                CanInteract = false;
+                StartCoroutine(TalkToFriendCO());
+            }
+        }
+        else if (hit1.collider.CompareTag("RedFriend"))
+        {
+            InteractionText.text = "Talk to Red Friend";
 
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    CanInteract = false;
-                    StartCoroutine(TalkToRedFriendCO());
-                }
-            }
-            else
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                InteractionText.text = "";
+                CanInteract = false;
+                StartCoroutine(TalkToRedFriendCO());
+            }
+        }
+        else if (hit1.collider.CompareTag("BlueFriend"))   // NEW OPTION
+        {
+            InteractionText.text = "Talk to Blue Friend";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                CanInteract = false;
+                StartCoroutine(TalkToBlueFriendCO());
             }
         }
         else
@@ -84,6 +91,11 @@ public class Caminteract : MonoBehaviour
             InteractionText.text = "";
         }
     }
+    else
+    {
+        InteractionText.text = "";
+    }
+}
 
     // ------------------------------------------
     // RED FRIEND DIALOGUE
@@ -95,6 +107,7 @@ public class Caminteract : MonoBehaviour
         FpsController.enabled = false;
 
         RedFriendZoomVcam.enabled = true;
+        BlueFriendZoomVcam.enabled = false;
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
@@ -128,6 +141,54 @@ public class Caminteract : MonoBehaviour
         StartCoroutine(FinalCO());
     }
 
+      // ------------------------------------------
+    // BLUE FRIEND DIALOGUE
+    // ------------------------------------------
+
+ IEnumerator TalkToBlueFriendCO()
+    {
+        TalkToBlueFriend = true;
+        InteractionText.text = "";
+        FpsController.enabled = false;
+
+        BlueFriendZoomVcam.enabled = true;
+        RedFriendZoomVcam.enabled = false;
+        PlayerVcam.enabled = false;
+        TalkZoomVcam.enabled = false;
+
+        LookAtScript.IKActive = true;
+
+        yield return new WaitForSeconds(1f);
+        TalkPanel.SetActive(true);
+
+        // Dialogue 1
+        SubText.text = "Me: ";
+        holder = "you are blue?";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        // Dialogue 2
+        SubText.text = "Kid: ";
+        holder = "for now yes.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        StartCoroutine(FinalCO());
+    }
+
+
+
+
     // ------------------------------------------
     // MAIN FRIEND DIALOGUE (with priority system)
     // ------------------------------------------
@@ -140,6 +201,7 @@ public class Caminteract : MonoBehaviour
         TalkZoomVcam.enabled = true;
         PlayerVcam.enabled = false;
         RedFriendZoomVcam.enabled = false;
+        BlueFriendZoomVcam.enabled = false;
 
         LookAtScript.IKActive = true;
 

@@ -10,6 +10,7 @@ TagManager:
   - WoodAxe
   - BowlSoup
   - Bed
+  - BlueFriend
   layers:
   - Default
   - TransparentFX
