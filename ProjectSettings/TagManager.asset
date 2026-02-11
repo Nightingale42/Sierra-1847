@@ -11,6 +11,8 @@ TagManager:
   - BowlSoup
   - Bed
   - BlueFriend
+  - PinkFriend
+  - OrangeFriend
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,10 @@ public class LookAt2 : MonoBehaviour
     public Animator RedFriendAnimator;
 
     public Animator BlueFriendAnimator;
+    
+    public Animator PinkFriendAnimator;
+
+    public Animator OrangeFriendAnimator;
 
     public bool IKActive = false;
 
@@ -83,6 +87,23 @@ public class LookAt2 : MonoBehaviour
 
             }
 
+             else if(CamInteract.TalkToPinkFriend == true)
+            {
+
+                PinkFriendAnimator.SetLookAtWeight(LookWeight);
+                PinkFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+             else if(CamInteract.TalkToOrangeFriend == true)
+            {
+
+                OrangeFriendAnimator.SetLookAtWeight(LookWeight);
+                OrangeFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
             
 
 

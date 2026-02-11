@@ -10,6 +10,8 @@ public class Caminteract : MonoBehaviour
     public bool TalkToActualFriend = false;
     public bool TalkToRedFriend = false;
     public bool TalkToBlueFriend = false;
+    public bool TalkToPinkFriend = false;
+    public bool TalkToOrangeFriend = false;
     public LookAt2 LookAtScript;
     public Text InteractionText;
     private float InteractDistance = 2f;
@@ -23,6 +25,8 @@ public class Caminteract : MonoBehaviour
     public CinemachineVirtualCamera TalkZoomVcam;
     public CinemachineVirtualCamera RedFriendZoomVcam;
     public CinemachineVirtualCamera BlueFriendZoomVcam;
+    public CinemachineVirtualCamera PinkFriendZoomVcam;
+    public CinemachineVirtualCamera OrangeFriendZoomVcam;
     public NewPlayerMovement FpsController;
 
     // Dialogue UI
@@ -86,6 +90,26 @@ public class Caminteract : MonoBehaviour
                 StartCoroutine(TalkToBlueFriendCO());
             }
         }
+         else if (hit1.collider.CompareTag("PinkFriend"))   // NEW OPTION
+        {
+            InteractionText.text = "Talk to Pink Friend";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                CanInteract = false;
+                StartCoroutine(TalkToPinkFriendCO());
+            }
+        }
+         else if (hit1.collider.CompareTag("OrangeFriend"))   // NEW OPTION
+        {
+            InteractionText.text = "Talk to Orange Friend";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                CanInteract = false;
+                StartCoroutine(TalkToOrangeFriendCO());
+            }
+        }
         else
         {
             InteractionText.text = "";
@@ -95,6 +119,7 @@ public class Caminteract : MonoBehaviour
     {
         InteractionText.text = "";
     }
+    
 }
 
     // ------------------------------------------
@@ -105,7 +130,9 @@ public class Caminteract : MonoBehaviour
         TalkToRedFriend = true;
         InteractionText.text = "";
         FpsController.enabled = false;
-
+        
+        OrangeFriendZoomVcam.enabled = false;
+        PinkFriendZoomVcam.enabled = false;
         RedFriendZoomVcam.enabled = true;
         BlueFriendZoomVcam.enabled = false;
         PlayerVcam.enabled = false;
@@ -151,6 +178,8 @@ public class Caminteract : MonoBehaviour
         InteractionText.text = "";
         FpsController.enabled = false;
 
+        OrangeFriendZoomVcam.enabled = false;
+        PinkFriendZoomVcam.enabled = false;
         BlueFriendZoomVcam.enabled = true;
         RedFriendZoomVcam.enabled = false;
         PlayerVcam.enabled = false;
@@ -185,9 +214,102 @@ public class Caminteract : MonoBehaviour
 
         StartCoroutine(FinalCO());
     }
+// ------------------------------------------
+    // PINK FRIEND DIALOGUE
+    // ------------------------------------------
+
+IEnumerator TalkToPinkFriendCO()
+    {
+        TalkToPinkFriend = true;
+        InteractionText.text = "";
+        FpsController.enabled = false;
+
+        
+        PinkFriendZoomVcam.enabled = true;
+        OrangeFriendZoomVcam.enabled = false;
+        BlueFriendZoomVcam.enabled = false;
+        RedFriendZoomVcam.enabled = false;
+        PlayerVcam.enabled = false;
+        TalkZoomVcam.enabled = false;
+
+        LookAtScript.IKActive = true;
+
+        yield return new WaitForSeconds(1f);
+        TalkPanel.SetActive(true);
+
+        // Dialogue 1
+        SubText.text = "Me: ";
+        holder = "you are pink?";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        // Dialogue 2
+        SubText.text = "Kid: ";
+        holder = "for now yes.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        StartCoroutine(FinalCO());
+    }
+
+// ------------------------------------------
+    // ORANGE FRIEND DIALOGUE
+    // ------------------------------------------
 
 
+IEnumerator TalkToOrangeFriendCO()
+    {
+        TalkToOrangeFriend = true;
+        InteractionText.text = "";
+        FpsController.enabled = false;
 
+        
+        OrangeFriendZoomVcam.enabled = true;
+        PinkFriendZoomVcam.enabled = false;
+        BlueFriendZoomVcam.enabled = false;
+        RedFriendZoomVcam.enabled = false;
+        PlayerVcam.enabled = false;
+        TalkZoomVcam.enabled = false;
+
+        LookAtScript.IKActive = true;
+
+        yield return new WaitForSeconds(1f);
+        TalkPanel.SetActive(true);
+
+        // Dialogue 1
+        SubText.text = "Me: ";
+        holder = "you are orange?";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        // Dialogue 2
+        SubText.text = "Kid: ";
+        holder = "for now yes.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        StartCoroutine(FinalCO());
+    }
 
     // ------------------------------------------
     // MAIN FRIEND DIALOGUE (with priority system)
@@ -202,6 +324,8 @@ public class Caminteract : MonoBehaviour
         PlayerVcam.enabled = false;
         RedFriendZoomVcam.enabled = false;
         BlueFriendZoomVcam.enabled = false;
+        PinkFriendZoomVcam.enabled = false;
+        OrangeFriendZoomVcam.enabled = false;
 
         LookAtScript.IKActive = true;
 
@@ -360,6 +484,9 @@ public class Caminteract : MonoBehaviour
     {
         TalkToRedFriend = false;
         TalkToActualFriend = false;
+        TalkToPinkFriend = false;
+        TalkToOrangeFriend = false;
+        TalkToBlueFriend = false;
 
         TalkPanel.SetActive(false);
         ChoicePack.SetActive(false);
