@@ -13,6 +13,9 @@ TagManager:
   - BlueFriend
   - PinkFriend
   - OrangeFriend
+  - YellowFriend
+  - GreenFriend
+  - PurpleFriend
   layers:
   - Default
   - TransparentFX

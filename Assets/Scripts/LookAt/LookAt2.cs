@@ -14,6 +14,9 @@ public class LookAt2 : MonoBehaviour
 
     public Animator OrangeFriendAnimator;
 
+    public Animator YellowFriendAnimator;
+    public Animator GreenFriendAnimator;
+    public Animator PurpleFriendAnimator;
     public bool IKActive = false;
 
     public Transform LookAtObj = null;
@@ -104,6 +107,36 @@ public class LookAt2 : MonoBehaviour
 
 
             }
+
+            
+             else if(CamInteract.TalkToYellowFriend == true)
+            {
+
+                YellowFriendAnimator.SetLookAtWeight(LookWeight);
+                YellowFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+             else if(CamInteract.TalkToGreenFriend == true)
+            {
+
+                GreenFriendAnimator.SetLookAtWeight(LookWeight);
+                GreenFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+            
+            
+             else if(CamInteract.TalkToPurpleFriend == true)
+            {
+
+                PurpleFriendAnimator.SetLookAtWeight(LookWeight);
+                PurpleFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
             
 
 
