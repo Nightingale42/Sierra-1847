@@ -5,8 +5,13 @@ public class LookAt3 : MonoBehaviour
     
 
     public Animator animator;
-
     public Animator RedFriendAnimator;
+    public Animator BlueFriendAnimator;
+    public Animator GreenFriendAnimator;
+     public Animator OrangeFriendAnimator;
+    public Animator PinkFriendAnimator;
+    public Animator YellowFriendAnimator;
+    public Animator PurpleFriendAnimator;
 
     public bool IKActive = false;
 
@@ -71,6 +76,65 @@ public class LookAt3 : MonoBehaviour
 
 
             }
+
+             else if(D2CamInteract.TalkToBlueFriend == true)
+            {
+
+                BlueFriendAnimator.SetLookAtWeight(LookWeight);
+                BlueFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+             else if(D2CamInteract.TalkToGreenFriend == true)
+            {
+
+                GreenFriendAnimator.SetLookAtWeight(LookWeight);
+                GreenFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+
+              else if(D2CamInteract.TalkToOrangeFriend == true)
+            {
+
+                OrangeFriendAnimator.SetLookAtWeight(LookWeight);
+                OrangeFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+
+             else if(D2CamInteract.TalkToYellowFriend == true)
+            {
+
+                YellowFriendAnimator.SetLookAtWeight(LookWeight);
+                YellowFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+
+             else if(D2CamInteract.TalkToPinkFriend == true)
+            {
+
+                PinkFriendAnimator.SetLookAtWeight(LookWeight);
+                PinkFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+                else if(D2CamInteract.TalkToPurpleFriend == true)
+            {
+
+                PurpleFriendAnimator.SetLookAtWeight(LookWeight);
+                PurpleFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            }
+
+
 
             
 
