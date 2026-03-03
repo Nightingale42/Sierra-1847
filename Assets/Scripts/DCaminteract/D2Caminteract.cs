@@ -334,6 +334,7 @@ IEnumerator TalkToPinkFriendCO()
         OrangeFriendZoomVcam.enabled = false;
         YellowFriendZoomVcam.enabled = false;
         PurpleFriendZoomVcam.enabled = false;
+        BlueFriendZoomVcam.enabled = false;
 
         LookAtScript.IKActive = true;
 
