@@ -179,7 +179,7 @@ public class Caminteract : MonoBehaviour
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+       // LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -229,7 +229,7 @@ public class Caminteract : MonoBehaviour
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+        //LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -278,7 +278,7 @@ IEnumerator TalkToPinkFriendCO()
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+      //  LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -329,7 +329,7 @@ IEnumerator TalkToOrangeFriendCO()
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+      //  LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -381,7 +381,7 @@ IEnumerator TalkToYellowFriendCO()
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+       // LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -431,7 +431,7 @@ IEnumerator TalkToGreenFriendCO()
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+       // LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);
@@ -482,7 +482,7 @@ IEnumerator TalkToPurpleFriendCO()
         PlayerVcam.enabled = false;
         TalkZoomVcam.enabled = false;
 
-        LookAtScript.IKActive = true;
+       // LookAtScript.IKActive = true;
 
         yield return new WaitForSeconds(1f);
         TalkPanel.SetActive(true);

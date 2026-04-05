@@ -6,20 +6,20 @@ public class LookAt2 : MonoBehaviour
 
     public Animator animator;
 
-    public Animator RedFriendAnimator;
+   // public Animator RedFriendAnimator;
 
-    public Animator BlueFriendAnimator;
+  //  public Animator BlueFriendAnimator;
     
-    public Animator PinkFriendAnimator;
+  //  public Animator PinkFriendAnimator;
 
-    public Animator OrangeFriendAnimator;
+   // public Animator OrangeFriendAnimator;
 
-    public Animator YellowFriendAnimator;
-    public Animator GreenFriendAnimator;
-    public Animator PurpleFriendAnimator;
+  //  public Animator YellowFriendAnimator;
+    //public Animator GreenFriendAnimator;
+    //public Animator PurpleFriendAnimator;
     public bool IKActive = false;
 
-    public Transform LookAtObj = null;
+   public Transform LookAtObj = null;
 
     public float LookWeight = 0f;
 
@@ -72,70 +72,70 @@ public class LookAt2 : MonoBehaviour
 
 
             }
-            else if(CamInteract.TalkToRedFriend == true)
-            {
+            // else if(CamInteract.TalkToRedFriend == true)
+            // {
 
-                RedFriendAnimator.SetLookAtWeight(LookWeight);
-                RedFriendAnimator.SetLookAtPosition(LookAtObj.position);
-
-
-            }
-
-            else if(CamInteract.TalkToBlueFriend == true)
-            {
-
-                BlueFriendAnimator.SetLookAtWeight(LookWeight);
-                BlueFriendAnimator.SetLookAtPosition(LookAtObj.position);
+            //     RedFriendAnimator.SetLookAtWeight(LookWeight);
+            //     RedFriendAnimator.SetLookAtPosition(LookAtObj.position);
 
 
-            }
+            // }
 
-             else if(CamInteract.TalkToPinkFriend == true)
-            {
+            // else if(CamInteract.TalkToBlueFriend == true)
+            // {
 
-                PinkFriendAnimator.SetLookAtWeight(LookWeight);
-                PinkFriendAnimator.SetLookAtPosition(LookAtObj.position);
-
-
-            }
-
-             else if(CamInteract.TalkToOrangeFriend == true)
-            {
-
-                OrangeFriendAnimator.SetLookAtWeight(LookWeight);
-                OrangeFriendAnimator.SetLookAtPosition(LookAtObj.position);
+            //     BlueFriendAnimator.SetLookAtWeight(LookWeight);
+            //     BlueFriendAnimator.SetLookAtPosition(LookAtObj.position);
 
 
-            }
+            // }
+
+            //  else if(CamInteract.TalkToPinkFriend == true)
+            // {
+
+            //     PinkFriendAnimator.SetLookAtWeight(LookWeight);
+            //     PinkFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            // }
+
+            //  else if(CamInteract.TalkToOrangeFriend == true)
+            // {
+
+            //     OrangeFriendAnimator.SetLookAtWeight(LookWeight);
+            //     OrangeFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            // }
 
             
-             else if(CamInteract.TalkToYellowFriend == true)
-            {
+            //  else if(CamInteract.TalkToYellowFriend == true)
+            // {
 
-                YellowFriendAnimator.SetLookAtWeight(LookWeight);
-                YellowFriendAnimator.SetLookAtPosition(LookAtObj.position);
-
-
-            }
-
-             else if(CamInteract.TalkToGreenFriend == true)
-            {
-
-                GreenFriendAnimator.SetLookAtWeight(LookWeight);
-                GreenFriendAnimator.SetLookAtPosition(LookAtObj.position);
+            //     YellowFriendAnimator.SetLookAtWeight(LookWeight);
+            //     YellowFriendAnimator.SetLookAtPosition(LookAtObj.position);
 
 
-            }
+            // }
+
+            //  else if(CamInteract.TalkToGreenFriend == true)
+            // {
+
+            //     GreenFriendAnimator.SetLookAtWeight(LookWeight);
+            //     GreenFriendAnimator.SetLookAtPosition(LookAtObj.position);
+
+
+            // }
             
             
-             else if(CamInteract.TalkToPurpleFriend == true)
-            {
+            //  else if(CamInteract.TalkToPurpleFriend == true)
+            // {
 
-                PurpleFriendAnimator.SetLookAtWeight(LookWeight);
-                PurpleFriendAnimator.SetLookAtPosition(LookAtObj.position);
+            //     PurpleFriendAnimator.SetLookAtWeight(LookWeight);
+            //     PurpleFriendAnimator.SetLookAtPosition(LookAtObj.position);
 
 
-            }
+            // }
 
             
 
