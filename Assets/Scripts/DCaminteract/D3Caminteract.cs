@@ -31,7 +31,7 @@ public class D3Caminteract : MonoBehaviour
     public Text SubText;
 
     string holder;
-    float time = 0.05f;
+    float time = 0.04f;
 
     private D3SleepSystem sleepSystem;
 

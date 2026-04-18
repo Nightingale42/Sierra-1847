@@ -9,6 +9,8 @@ public class D2CollectibleCount : MonoBehaviour
     TMP_Text text;
     public WinLose winLoseScript;
 
+    public int totalLogs = 20; // 👈 fixed total
+
     void Awake()
     {
         text = GetComponent<TMPro.TMP_Text>();
@@ -24,7 +26,7 @@ public class D2CollectibleCount : MonoBehaviour
 
     void OnCollectibleCollected()
     {
-        D2Caminteract.count++;   // update the REAL count
+        D2Caminteract.count++;  
         UpdateCount();
 
         if (D2Caminteract.count > 6)
@@ -35,6 +37,6 @@ public class D2CollectibleCount : MonoBehaviour
 
     void UpdateCount()
     {
-        text.text = $"{D2Caminteract.count} / {Collectible.total}";
+        text.text = $"{D2Caminteract.count} / {totalLogs}";
     }
 }

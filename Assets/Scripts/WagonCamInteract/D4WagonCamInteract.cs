@@ -41,7 +41,7 @@ public class D4WagonCamInteract : MonoBehaviour
     public int NextSceneIndex = 1;
 
     // ================= STATE =================
-    private float typeSpeed = 0.05f;
+    private float typeSpeed = 0.04f;
     private bool endingDay;
 
     // ================= WOOD =================

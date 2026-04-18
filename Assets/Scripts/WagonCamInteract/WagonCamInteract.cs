@@ -11,7 +11,7 @@ public class WagonCamInteract : MonoBehaviour
     [Header("Interaction")]
     public Transform RayOrigin;
     public Text InteractionText;
-    public float InteractDistance = 2f;
+    public float InteractDistance = 1f;
     public bool CanInteract = true;
 
     // ================= CAMERAS =================
@@ -41,7 +41,7 @@ public class WagonCamInteract : MonoBehaviour
     public int NextSceneIndex = 1;
 
     // ================= STATE =================
-    private float typeSpeed = 0.05f;
+    private float typeSpeed = 0.04f;
     private bool endingDay;
 
     // ================= WOOD =================

@@ -4,10 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+
 public class CollectibleCount : MonoBehaviour
 {
     TMP_Text text;
     public WinLose winLoseScript;
+
+    public int totalLogs = 20; // 👈 fixed total set to 20
 
     void Awake()
     {
@@ -24,10 +32,10 @@ public class CollectibleCount : MonoBehaviour
 
     void OnCollectibleCollected()
     {
-        Caminteract.count++;   // update the REAL count
+        Caminteract.count++;  
         UpdateCount();
 
-        if (Caminteract.count > 6)
+        if (Caminteract.count >= totalLogs) // 👈 match the goal
         {
             SceneManager.LoadScene("GameWin");
         }
@@ -35,6 +43,6 @@ public class CollectibleCount : MonoBehaviour
 
     void UpdateCount()
     {
-        text.text = $"{Caminteract.count} / {Collectible.total}";
+        text.text = $"{Caminteract.count} / {totalLogs}";
     }
 }

@@ -23,6 +23,8 @@ public class Caminteract : MonoBehaviour
     // Wood collecting
     public static int count;
 
+    public int totalLogs = 20;
+
     // Cameras & Movement
     public CinemachineVirtualCamera PlayerVcam;
     public CinemachineVirtualCamera TalkZoomVcam;
@@ -41,7 +43,7 @@ public class Caminteract : MonoBehaviour
     public Text SubText;
 
     string holder;
-    float time = 0.05f;
+    float time = 0.04f;
 
     // Sleep System
     private SleepSystem sleepSystem;
@@ -52,6 +54,9 @@ public class Caminteract : MonoBehaviour
     {
         sleepSystem = GetComponent<SleepSystem>();  // Find SleepSystem on same GameObject
     }
+
+
+
 
     // ------------------------------------------
     // UPDATE – Interaction Raycast
@@ -590,7 +595,7 @@ IEnumerator TalkToPurpleFriendCO()
         // -----------------------------
         // 2. LOGS PRIORITY
         // -----------------------------
-        if (count > 2)
+        if (Caminteract.count > 20)
         {
             Debug.Log("PRIORITY: Logs dialogue triggered.");
 

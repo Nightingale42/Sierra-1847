@@ -9,6 +9,8 @@ public class D3CollectibleCount : MonoBehaviour
     TMP_Text text;
     public WinLose winLoseScript;
 
+    public int totalLogs = 20; // 👈 fixed total
+
     void Awake()
     {
         text = GetComponent<TMPro.TMP_Text>();
@@ -24,10 +26,10 @@ public class D3CollectibleCount : MonoBehaviour
 
     void OnCollectibleCollected()
     {
-        D3Caminteract.count++;   // update the REAL count
+        D2Caminteract.count++;  
         UpdateCount();
 
-        if (D3Caminteract.count > 6)
+        if (D2Caminteract.count > 6)
         {
             SceneManager.LoadScene("GameWin");
         }
@@ -35,6 +37,6 @@ public class D3CollectibleCount : MonoBehaviour
 
     void UpdateCount()
     {
-        text.text = $"{D3Caminteract.count} / {Collectible.total}";
+        text.text = $"{D2Caminteract.count} / {totalLogs}";
     }
 }

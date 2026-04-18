@@ -46,7 +46,7 @@ public class D3WagonCamInteract : MonoBehaviour
     public AudioClip Horse;
 
     // ================= STATE =================
-    private float typeSpeed = 0.05f;
+    private float typeSpeed = 0.04f;
     private bool endingDay;
 
     // ================= WOOD =================

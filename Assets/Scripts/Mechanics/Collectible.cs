@@ -6,14 +6,14 @@ using System;
 public class Collectible : MonoBehaviour
 {
     public static event Action OnCollected;
-    public static int total;
+    //public static int total;
 
     [Header("Audio")]
     public AudioClip woodCollectSound;
 
     void Awake()
     {
-        total++;
+     //   total++;
     }
 
     void OnTriggerEnter(Collider other)

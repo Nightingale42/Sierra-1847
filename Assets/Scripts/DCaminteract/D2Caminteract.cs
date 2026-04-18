@@ -15,7 +15,7 @@ public class D2Caminteract : MonoBehaviour
      public bool TalkToPurpleFriend = false;
     public LookAt3 LookAtScript;
     public Text InteractionText;
-    public float InteractDistance = 2f;
+    public float InteractDistance = 3f;
     public bool CanInteract = true;
 
     public static int count;
@@ -357,6 +357,90 @@ IEnumerator TalkToPinkFriendCO()
                 SubText.text += c;
                 yield return new WaitForSeconds(time);
             }
+
+             yield return MousePress();
+
+             SubText.text = "Me: ";
+            holder = "yeah they were okay. Sorry, there wasn't enough for both of us.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+             yield return MousePress();
+
+             SubText.text = "Friend: ";
+            holder = "Thats okay. you don't suppose we could knock one of these birds out of the sky do you?";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+             yield return MousePress();
+
+                SubText.text = "Me: ";
+            holder = "If we had a bow or something, maybe.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+                yield return MousePress();
+
+
+                SubText.text = "Friend: ";
+            holder = "I have a gun.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+             yield return MousePress();
+
+             
+                SubText.text = "Me: ";
+            holder = "Oh- okay. Yeah that should work.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+            yield return MousePress();
+
+  
+                SubText.text = "Friend: ";
+            holder = "I'm not a very good shot, do you think you could try?";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+             yield return MousePress();
+
+                SubText.text = "Me: ";
+            holder = "Yeah sure man.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
+                 yield return MousePress();
+
+                SubText.text = "Friend: ";
+            holder = "Solid. It's over by my tent.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+
 
             yield return new WaitForSeconds(2f);
             StartCoroutine(FinalCO());
