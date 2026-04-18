@@ -16,6 +16,7 @@ TagManager:
   - YellowFriend
   - GreenFriend
   - PurpleFriend
+  - SoupInteract
   layers:
   - Default
   - TransparentFX

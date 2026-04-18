@@ -42,7 +42,7 @@ public class D2Caminteract : MonoBehaviour
     public Text SubText;
 
     string holder;
-    float time = 0.05f;
+    float time = 0.04f;
 
     private D2SleepSystem sleepSystem;
 
@@ -218,7 +218,7 @@ public class D2Caminteract : MonoBehaviour
         yield return MousePress();
 
         SubText.text = "Diana: ";
-        holder = "That mushroom is an Amnita, it's pretty poisonous so I wouldn't recomend eating it. Honestly I wouldn't recommend eating anything in that basket thats touched it, but we both know out situation is too dire for percautions.";
+        holder = "That mushroom is an Amnita, it's pretty poisonous so I wouldn't recomend eating it.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -363,7 +363,7 @@ IEnumerator TalkToPinkFriendCO()
             yield break;
         }
 
-        if (count > 2)
+        if (count > 5)
         {
             SubText.text = "Friend: ";
             holder = "Oh nice! You got some stuff. I can't really tell what's safe or not... Oh, I know! You should go talk to Diana. She's able to recognize lots of forageables.";
