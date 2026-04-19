@@ -151,7 +151,7 @@ public class D2Caminteract : MonoBehaviour
 
         else if (hit.collider.CompareTag("RedFriend"))
         {
-            if (count > 5)
+            if (count > 10)
             {
                 InteractionText.text = "Talk to Diana";
 
@@ -447,7 +447,7 @@ IEnumerator TalkToPinkFriendCO()
             yield break;
         }
 
-        if (count > 5)
+        if (count > 10)
         {
             SubText.text = "Friend: ";
             holder = "Oh nice! You got some stuff. I can't really tell what's safe or not... Oh, I know! You should go talk to Diana. She's able to recognize lots of forageables.";
