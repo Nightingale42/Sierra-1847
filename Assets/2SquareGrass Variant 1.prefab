@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 8647466977827839253, guid: 1bc5d3c13a0404944859625ab14f2420,
         type: 3}
       propertyPath: m_Name
-      value: 2SquareGrass Variant
+      value: 2SquareGrass Variant 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
