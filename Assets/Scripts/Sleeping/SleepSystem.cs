@@ -94,7 +94,7 @@ public class SleepSystem : MonoBehaviour
 
         // TMP text writing
         Subtext.text = "";
-        Holder = "Night 100";
+        Holder = "Vertical slice";
 
         foreach (char c in Holder)
         {

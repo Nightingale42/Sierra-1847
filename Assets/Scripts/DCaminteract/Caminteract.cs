@@ -579,14 +579,42 @@ IEnumerator TalkToPurpleFriendCO()
                 }
             }
 
-            SubText.text = "Friend: ";
-            holder = "Looks like you got some dinner. Probably best to head to bed, we've got a big day ahead.";
+            SubText.text = "You: ";
+            holder = "That soup wasn’t half bad.";
             foreach (char c in holder)
             {
                 SubText.text += c;
                 yield return new WaitForSeconds(time);
             }
+               yield return MousePress();
 
+
+             SubText.text = "Jesse: ";
+            holder = " Yeah, just vegetables but we make do.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+            yield return MousePress();
+             
+              SubText.text = "Jesse: ";
+            holder = "  Best to get some rest before we head out again, I'll see you in the morning?";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+             yield return MousePress();
+
+              SubText.text = "You: ";
+            holder = "sounds good.";
+            foreach (char c in holder)
+            {
+                SubText.text += c;
+                yield return new WaitForSeconds(time);
+            }
+            
             yield return new WaitForSeconds(2f);
             StartCoroutine(FinalCO());
             yield break;
@@ -599,14 +627,14 @@ IEnumerator TalkToPurpleFriendCO()
         {
             Debug.Log("PRIORITY: Logs dialogue triggered.");
 
-            SubText.text = "Friend: ";
-            holder = "Thanks for collecting those logs. There's some soup in the communal pot. Don't ask what's in it.";
+            SubText.text = "Jesse: ";
+            holder = "Thanks for gathering those logs. Most folks ate already but I made sure they saved you a bowl, should be down by the fire. Got our tents pitched, so come on back when you’re done.";
             foreach (char c in holder)
             {
                 SubText.text += c;
                 yield return new WaitForSeconds(time);
             }
-
+        
             yield return new WaitForSeconds(2f);
             StartCoroutine(FinalCO());
             yield break;
@@ -617,8 +645,8 @@ IEnumerator TalkToPurpleFriendCO()
         // -----------------------------
         Debug.Log("PRIORITY: Default dialogue triggered.");
 
-        SubText.text = "Me: ";
-        holder = "Hey man, can I help with anything?";
+        SubText.text = "You: ";
+        holder = "Hey man, is there anything I can help out with?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -627,8 +655,8 @@ IEnumerator TalkToPurpleFriendCO()
 
         yield return MousePress();
 
-        SubText.text = "Friend: ";
-        holder = "Hey there. We could use some help collecting wood for the fire tonight.";
+        SubText.text = "Jesse: ";
+        holder = "You mind helping us round up some firewood?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -637,8 +665,8 @@ IEnumerator TalkToPurpleFriendCO()
 
         yield return MousePress();
 
-        SubText.text = "Friend: ";
-        holder = "The Axe is over by the barrels. Oh- and try to only chop the dead trees. They burn easier.";
+        SubText.text = "Jesse: ";
+        holder = "You’ll wanna stick to cutting down the dead timber - it burns easier. The axe is behind me by the red tent.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -659,7 +687,7 @@ IEnumerator TalkToPurpleFriendCO()
     {
         ChoicePack.SetActive(false);
 
-        SubText.text = "Me: ";
+        SubText.text = "You: ";
         holder = "Yeah I can help out with that.";
         foreach (char c in holder)
         {
@@ -675,7 +703,7 @@ IEnumerator TalkToPurpleFriendCO()
     {
         ChoicePack.SetActive(false);
 
-        SubText.text = "Me: ";
+        SubText.text = "You: ";
         holder = "No, sorry I'm busy at the moment.";
         foreach (char c in holder)
         {

@@ -10,6 +10,10 @@ public class WagonCamInteract : MonoBehaviour
     // ================= INTERACTION =================
     [Header("Interaction")]
     public Transform RayOrigin;
+
+    public bool choiceMade = false;
+    public int chosenOption = -1;
+
     public Text InteractionText;
     public float InteractDistance = 1f;
     public bool CanInteract = true;
@@ -37,7 +41,7 @@ public class WagonCamInteract : MonoBehaviour
     public TextMeshProUGUI NightSubtext;
     public string NightText = "Night 100";
     public float FadeDelay = 2f;
-    public float WriteSpeed = 0.5f;
+    public float WriteSpeed = .004f;
     public int NextSceneIndex = 1;
 
     // ================= STATE =================
@@ -46,7 +50,11 @@ public class WagonCamInteract : MonoBehaviour
 
     // ================= WOOD =================
     public static int count;
-
+public void MakeChoice(int option)
+{
+    chosenOption = option;
+    choiceMade = true;
+}
     // --------------------------------------------------
     void Update()
     {
@@ -139,19 +147,57 @@ public class WagonCamInteract : MonoBehaviour
         else
         {
             // -------- DEFAULT CONVERSATION --------
-            yield return TypeLine("Me: ",
+            yield return TypeLine("You: ",
                 "I'm so ready to get out of here. I know the trip is short but I could not wait to leave.");
             yield return WaitForClick();
 
-            yield return TypeLine("Friend: ",
-                "Yeah, I hear you. I've been waiting for this.");
+            yield return TypeLine("Jesse: ",
+                "No kidding- I swear my family was fixin to run me plum up the wall. Speaking of, why’re you heading west?");
             yield return WaitForClick();
 
-            yield return TypeLine("Friend: ",
-                "So what's driving you west? Same as the rest of us I suppose.");
+           // -------- CHOICE PAUSE --------
 
-            ChoicePack.SetActive(true);
+
+
+    ChoicePack.SetActive(true);
+
+    // Wait until player selects anything
+    yield return new WaitUntil(() => choiceMade == true);
+
+    ChoicePack.SetActive(false);
+
+    // reset (important if reused later)
+    choiceMade = false;
+    chosenOption = -1;
+
+
+
+    // -------- SAME RESPONSE REGARDLESS OF CHOICE --------
+
+            yield return TypeLine("Jesse: ",
+                "That's as good a reason as any I suppose.");
+            yield return WaitForClick();
+
+              yield return TypeLine("Jesse: ",
+                "...");
+            yield return WaitForClick();
+
+              yield return TypeLine("Jesse: ",
+                "Sure hope Virgil knows what he’s doing. What with this being the first time anyone has ever traveled this route and all.");
+            yield return WaitForClick();
+
+             yield return TypeLine("You: ",
+                "He’s got that fancy book of his, right? Thing’s got the path all mapped out.");
+            yield return WaitForClick();
+
+             yield return TypeLine("Jesse: ",
+                "Well... we sure didn’t leave ourselves much room for error. Reckon it’ll turn out alright though—he keeps a tight hold on the reins.");
+            yield return WaitForClick();
+
+           // ChoicePack.SetActive(true);
+            yield return ExitDialogue(true);
             yield break;
+            
         }
 
         // -------- END DAY --------
@@ -163,19 +209,9 @@ public class WagonCamInteract : MonoBehaviour
     }
 
     // ================= CHOICES =================
-    public void Choice1Void() =>
-        StartCoroutine(ChoiceCO("Me: ", "Gold, land... why not go west?"));
 
-    public void Choice2Void() =>
-        StartCoroutine(ChoiceCO("Me: ", "I need to get away from my family."));
 
-    IEnumerator ChoiceCO(string speaker, string line)
-    {
-        ChoicePack.SetActive(false);
-        yield return TypeLine(speaker, line);
-        yield return new WaitForSeconds(2f);
-        yield return ExitDialogue(true);
-    }
+   
 
     // ================= EXIT =================
     IEnumerator ExitDialogue(bool endDay)
@@ -224,7 +260,7 @@ public class WagonCamInteract : MonoBehaviour
             yield return new WaitForSeconds(WriteSpeed);
         }
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(NextSceneIndex);
     }
 
