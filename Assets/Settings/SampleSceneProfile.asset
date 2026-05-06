@@ -46,7 +46,7 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 3.75
+    m_Value: 3.32
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -68,10 +68,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.304
+    m_Value: 0.351
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.504
+    m_Value: 0.512
   rounded:
     m_OverrideState: 0
     m_Value: 0
@@ -93,10 +93,10 @@ MonoBehaviour:
     m_Value: 5
   intensity:
     m_OverrideState: 1
-    m_Value: 0.389
+    m_Value: 0.215
   response:
     m_OverrideState: 1
-    m_Value: 0.931
+    m_Value: 0.622
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}

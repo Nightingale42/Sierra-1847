@@ -190,8 +190,8 @@ public class Caminteract : MonoBehaviour
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "How're you holding up kid?";
+        SubText.text = "Diana: ";
+        holder = "I kind of wish I had brought another blanket with me. ";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -201,8 +201,8 @@ public class Caminteract : MonoBehaviour
         yield return MousePress();
 
         // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "Not great I guess... It's so cold out and my stomach hurts. I haven't eaten in days.";
+        SubText.text = "You: ";
+        holder = " I hear that, sister.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -220,7 +220,7 @@ public class Caminteract : MonoBehaviour
 
  IEnumerator TalkToBlueFriendCO()
     {
-        TalkToBlueFriend = true;
+        TalkToBlueFriend = false; ///changed this to make him not talk 5/5/2026; make him play guitar
         InteractionText.text = "";
         FpsController.enabled = false;
 
@@ -289,19 +289,8 @@ IEnumerator TalkToPinkFriendCO()
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "you are pink?";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        yield return MousePress();
-
-        // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "for now yes.";
+        SubText.text = "Adeline: ";
+        holder = "He’s a great player, isn’t he?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -340,8 +329,8 @@ IEnumerator TalkToOrangeFriendCO()
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "you are orange?";
+        SubText.text = "You: ";
+        holder = "Hey, Martha. Not to be annoying but about how much longer we will be on the road? It’s already fall...";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -351,8 +340,8 @@ IEnumerator TalkToOrangeFriendCO()
         yield return MousePress();
 
         // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "for now yes.";
+        SubText.text = "Martha: ";
+        holder = "My husband’s guide says once we hit Hasting’s Cutoff we’ll be in California in no time. We’re not too far off now.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -392,8 +381,8 @@ IEnumerator TalkToYellowFriendCO()
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "you are yellow?";
+        SubText.text = "Virgil: ";
+        holder = "Is Jesse collecting that firewood I asked him to?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -403,8 +392,8 @@ IEnumerator TalkToYellowFriendCO()
         yield return MousePress();
 
         // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "for now yes.";
+        SubText.text = "You: ";
+        holder = "He was supposed to collect the firewood?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -442,8 +431,8 @@ IEnumerator TalkToGreenFriendCO()
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "you are green?";
+        SubText.text = "Rudolph: ";
+        holder = "What do you want?";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -453,8 +442,18 @@ IEnumerator TalkToGreenFriendCO()
         yield return MousePress();
 
         // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "for now yes.";
+        SubText.text = "You: ";
+        holder = "I was just coming over to say Hi.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+            SubText.text = "Rudolph: ";
+        holder = "Well you’ve done that… so you can leave now.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -493,8 +492,8 @@ IEnumerator TalkToPurpleFriendCO()
         TalkPanel.SetActive(true);
 
         // Dialogue 1
-        SubText.text = "Me: ";
-        holder = "you are purple?";
+        SubText.text = "You: ";
+        holder = "I don't think we've met.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -504,8 +503,8 @@ IEnumerator TalkToPurpleFriendCO()
         yield return MousePress();
 
         // Dialogue 2
-        SubText.text = "Kid: ";
-        holder = "for now yes.";
+        SubText.text = "Blanche: ";
+        holder = "No… I don’t think so either. My name is Blanche.";
         foreach (char c in holder)
         {
             SubText.text += c;
@@ -514,6 +513,26 @@ IEnumerator TalkToPurpleFriendCO()
 
         yield return MousePress();
 
+        SubText.text = "You: ";
+        holder = " I’m Eugene. Nice to meet you, Blanche.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
+
+        
+        SubText.text = "Blanche: ";
+        holder = "Likewise.";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePress();
         StartCoroutine(FinalCO());
     }
 
